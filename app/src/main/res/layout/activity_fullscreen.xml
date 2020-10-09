@@ -67,6 +67,12 @@
                 android:layout_marginStart="335dp"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/start" />
+
+            <ImageButton
+                android:id="@+id/creditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/credits" />
         </RelativeLayout>
 
     </FrameLayout>

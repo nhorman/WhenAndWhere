@@ -61,6 +61,11 @@ class FullscreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        val credit = findViewById<ImageButton>(R.id.creditButton)
+        credit.setOnClickListener {
+            val intent = Intent(this, CreditActivity::class.java)
+            startActivity(intent)
+        }
 
 
 

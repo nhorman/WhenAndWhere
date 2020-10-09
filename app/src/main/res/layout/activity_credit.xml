@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".CreditActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ItemText"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Intro music - Epicness By Music Today 80"
+            android:textAlignment="center"
+            android:textColor="#FAF5F5"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/URLText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="https://soundcloud.com/musictoday80/epic-music"
+            android:autoLink="web"
+            android:textAlignment="center"
+            android:textColor="#FAF6F6"
+            android:visibility="visible" />
+    </LinearLayout>
+</LinearLayout>
