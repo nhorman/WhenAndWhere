@@ -28,7 +28,7 @@ class GameSetupActivity : AppCompatActivity() {
         supportActionBar?.hide()
         val simple = findViewById(R.id.SimpleJustWhenButton) as Button
         simple.setOnClickListener {
-            val intent = Intent(this, GameSetupActivity::class.java)
+            val intent = Intent(this, SimpleJustWhenActivity::class.java)
             startActivity(intent)
             finish()
         }
