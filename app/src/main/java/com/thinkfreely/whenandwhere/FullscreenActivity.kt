@@ -3,6 +3,7 @@ package com.thinkfreely.whenandwhere
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -55,14 +56,20 @@ class FullscreenActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        val mediaplayer = MediaPlayer.create(this, R.raw.epic)
+        mediaplayer.setVolume(1.0f, 1.0f)
+        mediaplayer.start()
+
         val start = findViewById(R.id.startButton) as ImageButton
         start.setOnClickListener {
+            mediaplayer.stop()
             val intent = Intent(this, GameSetupActivity::class.java)
             startActivity(intent)
             finish()
         }
         val credit = findViewById<ImageButton>(R.id.creditButton)
         credit.setOnClickListener {
+            mediaplayer.stop()
             val intent = Intent(this, CreditActivity::class.java)
             startActivity(intent)
         }
