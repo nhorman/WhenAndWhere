@@ -32,15 +32,12 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
-            <VideoView
-                android:id="@+id/videoView"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="center" />
+            <ImageView
+                android:id="@+id/splashView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/splash"
+                android:scaleType="fitXY"/>
 
             <ImageView
                 android:id="@+id/titleView"

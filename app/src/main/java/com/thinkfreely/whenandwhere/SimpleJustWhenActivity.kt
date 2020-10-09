@@ -2,7 +2,6 @@ package com.thinkfreely.whenandwhere
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -15,31 +14,18 @@ import android.widget.TextView
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class GameSetupActivity : AppCompatActivity() {
-
-
+class SimpleJustWhenActivity : AppCompatActivity() {
 
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_game_setup)
+        setContentView(R.layout.activity_simple_just_when)
         supportActionBar?.hide()
-        val simple = findViewById(R.id.SimpleJustWhenButton) as Button
-        simple.setOnClickListener {
-            val intent = Intent(this, GameSetupActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
+
     }
-
-
-
 
     companion object {
         /**

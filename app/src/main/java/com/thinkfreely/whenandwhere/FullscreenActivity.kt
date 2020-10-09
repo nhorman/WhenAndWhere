@@ -62,22 +62,25 @@ class FullscreenActivity : AppCompatActivity() {
             finish()
         }
 
-        val vv = findViewById(R.id.videoView) as VideoView
-        vv.setOnCompletionListener {
-            showMainGameScreen()
-        }
-        vv.setOnTouchListener(object: View.OnTouchListener{
 
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                vv.stopPlayback()
-                showMainGameScreen()
-                return v?.onTouchEvent(event) ?: true
-            }
 
-        })
-        var uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splash)
-        vv.setVideoURI(uri)
-        vv.start()
+        showMainGameScreen()
+        //val vv = findViewById(R.id.videoView) as VideoView
+        //vv.setOnCompletionListener {
+        //    showMainGameScreen()
+        //}
+        //vv.setOnTouchListener(object: View.OnTouchListener{
+
+          //  override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+            //    vv.stopPlayback()
+              //  showMainGameScreen()
+                //return v?.onTouchEvent(event) ?: true
+            //}
+
+        //})
+        //var uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splash)
+        //vv.setVideoURI(uri)
+        //vv.start()
     }
 
 
