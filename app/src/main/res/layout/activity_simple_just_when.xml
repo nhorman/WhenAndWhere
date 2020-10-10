@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/beforeText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#172023"
@@ -46,7 +47,7 @@
                 android:id="@+id/currentCardLayout"
                 android:layout_width="181dp"
                 android:layout_height="match_parent"
-                android:gravity = "center">
+                android:gravity="center">
 
             </FrameLayout>
 
@@ -55,6 +56,15 @@
                 android:layout_width="181dp"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:text="Before"
+                    android:textAlignment="center"
+                    android:textColor="#FBFBFB"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
             </FrameLayout>
 
             <FrameLayout
@@ -62,6 +72,15 @@
                 android:layout_width="169dp"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/NowText"
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp"
+                    android:text="Now"
+                    android:textAlignment="center"
+                    android:textColor="#FBFBFB"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
             </FrameLayout>
 
             <FrameLayout
@@ -69,6 +88,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/AfterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:text="After"
+                    android:textAlignment="center"
+                    android:textColor="#FAFAFA"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
             </FrameLayout>
         </LinearLayout>
     </FrameLayout>
