@@ -4,4 +4,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_game_setup">FullscreenActivity</string>
     <string name="title_activity_simple_just_when">FullscreenActivity</string>
+    <string name="intro_music_epicness_by_music_today_80">Intro music - Epicness By Music Today 80</string>
+    <string name="https_soundcloud_com_musictoday80_epic_music">https://soundcloud.com/musictoday80/epic-music</string>
 </resources>

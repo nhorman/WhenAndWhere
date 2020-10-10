@@ -11,7 +11,8 @@ data class Card(
     @ColumnInfo(name = "year") var year : Long?,
     @ColumnInfo(name = "location") var location : String?,
     @ColumnInfo(name = "cardtext") var cardText : String?,
-    @ColumnInfo(name = "credit") var credits: String?
+    @ColumnInfo(name = "credittext") var credittext: String?,
+    @ColumnInfo(name = "crediturl") var crediturl: String?
 )
 
 @Dao
@@ -29,16 +30,16 @@ abstract class GameCardDb : RoomDatabase() {
     abstract fun cardDao(): CardDao
 }
 
+
 class GameCardFactory(val context: Context) {
     val db = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db").createFromAsset("database/cards.db").build()
-
-    init {
-        val olddb = context.getDatabasePath("mycards.db").absoluteFile
-        olddb.deleteOnExit()
-    }
 
     fun getRandomCard() : GameCard {
        val card = db.cardDao().getRandomCard()
        return GameCard(card)
+    }
+
+    fun getAllCards(): List<Card> {
+        return db.cardDao().getAll()
     }
 }

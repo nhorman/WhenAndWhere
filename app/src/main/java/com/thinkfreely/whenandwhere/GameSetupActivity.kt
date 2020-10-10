@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -26,7 +27,7 @@ class GameSetupActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_setup)
         supportActionBar?.hide()
-        val simple = findViewById(R.id.SimpleJustWhenButton) as Button
+        val simple = findViewById(R.id.SimpleJustWhenButton) as ImageButton
         simple.setOnClickListener {
             val intent = Intent(this, SimpleJustWhenActivity::class.java)
             startActivity(intent)

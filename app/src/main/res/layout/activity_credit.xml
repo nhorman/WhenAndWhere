@@ -8,30 +8,44 @@
     android:visibility="visible"
     tools:context=".CreditActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="31dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/ItemText"
-            android:layout_width="217dp"
+        <LinearLayout
+            android:id="@+id/creditsVLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Intro music - Epicness By Music Today 80"
-            android:textAlignment="center"
-            android:textColor="#FAF5F5"
-            android:visibility="visible" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/URLText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="https://soundcloud.com/musictoday80/epic-music"
-            android:autoLink="web"
-            android:textAlignment="center"
-            android:textColor="#FAF6F6"
-            android:visibility="visible" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/creditsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ItemText"
+                    android:layout_width="217dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/intro_music_epicness_by_music_today_80"
+                    android:textAlignment="center"
+                    android:textColor="#FAF5F5"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/URLText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autoLink="web"
+                    android:text="@string/https_soundcloud_com_musictoday80_epic_music"
+                    android:textAlignment="center"
+                    android:textColor="#FAF6F6"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

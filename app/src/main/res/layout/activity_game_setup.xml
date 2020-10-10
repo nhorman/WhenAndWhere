@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="#131A1C"
     tools:context=".GameSetupActivity">
 
@@ -37,12 +38,14 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/SimpleJustWhenButton"
-            android:layout_width="266dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Simple Just When" />
+            android:layout_width="match_parent"
+            android:layout_height="129dp"
+            android:fadingEdge="horizontal|vertical"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/simplejustwhen" />
+
     </FrameLayout>
 
 </FrameLayout>
