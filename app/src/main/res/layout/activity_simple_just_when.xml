@@ -45,7 +45,8 @@
             <FrameLayout
                 android:id="@+id/currentCardLayout"
                 android:layout_width="181dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity = "center">
 
             </FrameLayout>
 

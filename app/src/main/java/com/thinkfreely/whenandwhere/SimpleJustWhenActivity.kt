@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import kotlinx.android.synthetic.main.activity_simple_just_when.*
+import kotlinx.coroutines.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -17,13 +17,31 @@ import android.widget.TextView
 class SimpleJustWhenActivity : AppCompatActivity() {
 
 
+    private fun getCurrentCard() : ImageView {
+        val cardfactory = GameCardFactory(applicationContext)
+        val card = cardfactory.getRandomCard()
+        val cardview = card.getCardView(applicationContext)
+        return cardview
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val job = Job()
+        val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
+        val scopeIO = CoroutineScope(job + Dispatchers.IO)
 
         setContentView(R.layout.activity_simple_just_when)
         supportActionBar?.hide()
 
+
+        scopeIO.launch {
+            val card = getCurrentCard()
+            scopeMainThread.launch {
+                val currentcard = findViewById(R.id.currentCardLayout) as FrameLayout
+                currentcard.addView(card)
+            }
+        }
 
     }
 
