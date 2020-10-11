@@ -2,13 +2,69 @@ package com.thinkfreely.whenandwhere
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipDescription
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Point
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.view.DragEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_simple_just_when.*
 import kotlinx.coroutines.*
+import android.view.View.OnLongClickListener;
+import android.view.ViewGroup
+import android.widget.ImageButton;
+import androidx.core.view.children
+
+private class GamePanelDragListener(v: Int) : View.OnDragListener {
+    val myviewid = v
+
+    override fun onDrag(v: View?, event: DragEvent?): Boolean {
+        if (myviewid == -1) {
+            return false
+        }
+        when (event?.action) {
+                DragEvent.ACTION_DRAG_STARTED -> {
+                    println("ACTION_DRAG_STARTED")
+                    return true
+                }
+                DragEvent.ACTION_DRAG_ENTERED -> {
+                    println("ENTERED" + myviewid)
+                    return true
+                }
+                DragEvent.ACTION_DROP -> {
+                    println("DROP in " + myviewid)
+                    return true
+                }
+                DragEvent.ACTION_DRAG_LOCATION -> {
+                    println("ACTION_LOCATION")
+                    return true
+                }
+                DragEvent.ACTION_DRAG_ENDED -> {
+                    println("ACTION_ENDED")
+                    return true
+                }
+                DragEvent.ACTION_DRAG_EXITED -> {
+                    println("EXITED")
+                    return true
+                }
+                else -> {
+                    println("UNKNOWN ACTION: " +event?.action.toString())
+                    return true
+                }
+            }
+        println("NO EVENT")
+        return false
+    }
+}
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -24,9 +80,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         return cardview
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private fun populateGameBoard() {
         val job = Job()
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
         val scopeIO = CoroutineScope(job + Dispatchers.IO)
@@ -43,6 +97,21 @@ class SimpleJustWhenActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_simple_just_when)
+        val simple = findViewById(R.id.simpleBoard) as FrameLayout
+        val root = simple.getRootView()
+        simple.setOnDragListener(GamePanelDragListener(R.id.simpleBoard))
+        root.setOnDragListener(GamePanelDragListener((-1).toInt()))
+        val after = findViewById(R.id.afterAreaLayout) as FrameLayout
+        after.setOnDragListener(GamePanelDragListener(R.id.afterAreaLayout))
+        val before = findViewById(R.id.beforeAreaLayout) as FrameLayout
+        before.setOnDragListener(GamePanelDragListener(R.id.beforeAreaLayout))
+        populateGameBoard()
     }
 
     companion object {
