@@ -4,7 +4,7 @@
     android:id="@+id/simpleBoard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#172023"
+    android:background="#000000"
     tools:context=".SimpleJustWhenActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -23,13 +23,14 @@
             android:id="@+id/currentCardLayout"
             android:layout_width="181dp"
             android:layout_height="match_parent"
+            android:background="#000000"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/CurrentTextView"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
-                android:text="Current"
+                android:text="@string/current"
                 android:textAlignment="center"
                 android:textColor="#F6F5F5"
                 android:textSize="24sp" />
@@ -38,13 +39,14 @@
         <FrameLayout
             android:id="@+id/beforeAreaLayout"
             android:layout_width="181dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#000000">
 
             <TextView
                 android:id="@+id/BeforeText"
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
-                android:text="Before"
+                android:text="@string/before"
                 android:textAlignment="center"
                 android:textColor="#FBFBFB"
                 android:textSize="24sp"
@@ -54,13 +56,14 @@
         <FrameLayout
             android:id="@+id/nowLayout"
             android:layout_width="169dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#000000">
 
             <TextView
                 android:id="@+id/NowText"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
-                android:text="Now"
+                android:text="@string/now"
                 android:textAlignment="center"
                 android:textColor="#FBFBFB"
                 android:textSize="24sp"
@@ -70,13 +73,14 @@
         <FrameLayout
             android:id="@+id/afterAreaLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#000000">
 
             <TextView
                 android:id="@+id/AfterText"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
-                android:text="After"
+                android:text="@string/after"
                 android:textAlignment="center"
                 android:textColor="#FAFAFA"
                 android:textSize="24sp"

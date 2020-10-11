@@ -19,9 +19,9 @@ import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_simple_just_when.*
 import kotlinx.coroutines.*
-import android.view.View.OnLongClickListener;
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.ImageButton;
+import android.widget.ImageButton
 import androidx.core.view.children
 
 private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDragListener {
@@ -36,7 +36,7 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENTERED -> {
-                    (v as FrameLayout).setBackgroundColor(Color.WHITE)
+                    (v as FrameLayout).setBackgroundColor(Color.GRAY)
                     v.invalidate()
                     //println("ENTERED")
                     return true
@@ -73,8 +73,6 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
                     return true
                 }
             }
-        println("NO EVENT")
-        return false
     }
 }
 
@@ -111,7 +109,6 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                 nowcard.setTag(R.id.simpleGameCard,ncard)
                 nowcard.addView(nowcard.getTag(R.id.simpleGameCardImageView) as ImageView)
 
-                val simple = findViewById(R.id.simpleBoard) as FrameLayout
                 val after = findViewById(R.id.afterAreaLayout) as FrameLayout
                 after.setOnDragListener(listener)
                 val before = findViewById(R.id.beforeAreaLayout) as FrameLayout
