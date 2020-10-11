@@ -10,97 +10,70 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text=""
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
-    <FrameLayout
-        android:id="@+id/FullBoardLayout"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/HBoardLayout"
+        android:layout_width="729dp"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent" />
-
-        <LinearLayout
-            android:id="@+id/HBoardLayout"
-            android:layout_width="729dp"
+        <FrameLayout
+            android:id="@+id/currentCardLayout"
+            android:layout_width="181dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:gravity="center">
 
-            <FrameLayout
-                android:id="@+id/currentCardLayout"
-                android:layout_width="181dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
+        </FrameLayout>
 
-            </FrameLayout>
+        <FrameLayout
+            android:id="@+id/beforeAreaLayout"
+            android:layout_width="181dp"
+            android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/beforeAreaLayout"
-                android:layout_width="181dp"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/BeforeText"
-                    android:layout_width="match_parent"
-                    android:layout_height="59dp"
-                    android:text="Before"
-                    android:textAlignment="center"
-                    android:textColor="#FBFBFB"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/nowLayout"
-                android:layout_width="169dp"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/NowText"
-                    android:layout_width="match_parent"
-                    android:layout_height="61dp"
-                    android:text="Now"
-                    android:textAlignment="center"
-                    android:textColor="#FBFBFB"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/afterAreaLayout"
+            <TextView
+                android:id="@+id/BeforeText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="59dp"
+                android:text="Before"
+                android:textAlignment="center"
+                android:textColor="#FBFBFB"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
-                <TextView
-                    android:id="@+id/AfterText"
-                    android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    android:text="After"
-                    android:textAlignment="center"
-                    android:textColor="#FAFAFA"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </LinearLayout>
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/nowLayout"
+            android:layout_width="169dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/NowText"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:text="Now"
+                android:textAlignment="center"
+                android:textColor="#FBFBFB"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/afterAreaLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/AfterText"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:text="After"
+                android:textAlignment="center"
+                android:textColor="#FAFAFA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
 
 </FrameLayout>

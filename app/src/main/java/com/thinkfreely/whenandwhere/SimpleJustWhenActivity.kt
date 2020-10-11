@@ -24,36 +24,37 @@ import android.view.ViewGroup
 import android.widget.ImageButton;
 import androidx.core.view.children
 
-private class GamePanelDragListener(v: Int) : View.OnDragListener {
-    val myviewid = v
+private class GamePanelDragListener() : View.OnDragListener {
 
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
-        if (myviewid == -1) {
-            return false
-        }
+        //println("PANEL")
         when (event?.action) {
                 DragEvent.ACTION_DRAG_STARTED -> {
-                    println("ACTION_DRAG_STARTED")
+                    //println("ACTION_DRAG_STARTED")
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENTERED -> {
-                    println("ENTERED" + myviewid)
+                    (v as FrameLayout).setBackgroundColor(Color.WHITE)
+                    v.invalidate()
+                    //println("ENTERED")
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
-                    println("DROP in " + myviewid)
+                    //println("DROP in ")
                     return true
                 }
                 DragEvent.ACTION_DRAG_LOCATION -> {
-                    println("ACTION_LOCATION")
+                    //println("ACTION_LOCATION")
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENDED -> {
-                    println("ACTION_ENDED")
+                    //println("ACTION_ENDED")
                     return true
                 }
                 DragEvent.ACTION_DRAG_EXITED -> {
-                    println("EXITED")
+                    (v as FrameLayout).setBackgroundColor(Color.BLACK)
+                    v.invalidate()
+                    //println("EXITED")
                     return true
                 }
                 else -> {
@@ -94,6 +95,15 @@ class SimpleJustWhenActivity : AppCompatActivity() {
             scopeMainThread.launch {
                 val currentcard = findViewById(R.id.currentCardLayout) as FrameLayout
                 currentcard.addView(card)
+                val listener = GamePanelDragListener()
+                val simple = findViewById(R.id.simpleBoard) as FrameLayout
+                val root = simple.getRootView()
+                //simple.setOnDragListener(listener)
+                //root.setOnDragListener(listener)
+                val after = findViewById(R.id.afterAreaLayout) as FrameLayout
+                after.setOnDragListener(listener)
+                val before = findViewById(R.id.beforeAreaLayout) as FrameLayout
+                before.setOnDragListener(listener)
             }
         }
 
@@ -103,14 +113,6 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_just_when)
-        val simple = findViewById(R.id.simpleBoard) as FrameLayout
-        val root = simple.getRootView()
-        simple.setOnDragListener(GamePanelDragListener(R.id.simpleBoard))
-        root.setOnDragListener(GamePanelDragListener((-1).toInt()))
-        val after = findViewById(R.id.afterAreaLayout) as FrameLayout
-        after.setOnDragListener(GamePanelDragListener(R.id.afterAreaLayout))
-        val before = findViewById(R.id.beforeAreaLayout) as FrameLayout
-        before.setOnDragListener(GamePanelDragListener(R.id.beforeAreaLayout))
         populateGameBoard()
     }
 
