@@ -115,4 +115,32 @@ class GameCard(val carddata : Card) {
         cardimageview.setImageDrawable(image)
         return cardimageview
     }
+
+    fun cameBefore(othercard: GameCard) : Boolean {
+        val thisyear = this.cardData.year?.toInt()
+        val otheryear = this.cardData.year?.toInt()
+        if (thisyear == null)
+            return false
+        if (otheryear == null)
+            return false
+
+        if (thisyear >= otheryear) {
+            return true
+        }
+        return false
+    }
+
+    fun cameAfter(othercard: GameCard) : Boolean {
+        val thisyear = this.cardData.year?.toInt()
+        val otheryear = this.cardData.year?.toInt()
+        if (thisyear == null)
+            return false
+        if (otheryear == null)
+            return false
+
+        if (thisyear <= otheryear) {
+            return true
+        }
+        return false
+    }
 }

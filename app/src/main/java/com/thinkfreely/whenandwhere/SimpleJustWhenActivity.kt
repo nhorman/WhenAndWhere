@@ -46,6 +46,8 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
                     currentcard.removeAllViews()
                     val card = currentcard.getTag(R.id.simpleGameCardImageView) as ImageView
                     (v as FrameLayout).addView(card)
+                    v.setTag(R.id.simpleGameCard, currentcard.getTag(R.id.simpleGameCard))
+                    v.setTag(R.id.simpleGameCardImageView, currentcard.getTag(R.id.simpleGameCardImageView))
                     v.invalidate()
                     currentcard.invalidate()
                     game.updateBoard(v)
@@ -128,6 +130,46 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     }
 
     fun updateBoard(v: FrameLayout) {
+        val job = Job()
+        val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
+        val scopeIO = CoroutineScope(job + Dispatchers.IO)
+
+        val now = findViewById(R.id.nowLayout) as FrameLayout
+        val ncard = now.getTag(R.id.simpleGameCard) as GameCard
+        val acard = v.getTag(R.id.simpleGameCard) as GameCard
+        if (v.id == R.id.afterAreaLayout) {
+            //We decided that the current card came after the now card
+            if (ncard.cameBefore(acard)) {
+                v.setBackgroundColor(Color.GREEN)
+            } else {
+                v.setBackgroundColor(Color.RED)
+            }
+        } else {
+            // We decided it came before the now card
+            if (ncard.cameAfter(acard)) {
+                v.setBackgroundColor(Color.GREEN)
+            } else {
+                v.setBackgroundColor(Color.RED)
+            }
+        }
+        scopeIO.launch {
+            val cardfactory = GameCardFactory(applicationContext)
+            val newcard = getRandomCard(cardfactory)
+            delay(1000)
+            scopeMainThread.launch {
+                v.setBackgroundColor(Color.BLACK)
+                v.removeView(v.getChildAt(1))
+                now.removeView(now.getChildAt(1))
+                now.addView(v.getTag(R.id.simpleGameCardImageView) as ImageView)
+                now.setTag(R.id.simpleGameCardImageView, v.getTag(R.id.simpleGameCardImageView))
+                now.setTag(R.id.simpleGameCard, v.getTag(R.id.simpleGameCard))
+                val current = findViewById(R.id.currentCardLayout) as FrameLayout
+                current.setTag(R.id.simpleGameCardImageView,newcard.getCardView(applicationContext))
+                current.setTag(R.id.simpleGameCard,newcard)
+                current.addView(current.getTag(R.id.simpleGameCardImageView) as ImageView)
+
+            }
+        }
 
     }
 
