@@ -24,7 +24,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton;
 import androidx.core.view.children
 
-private class GamePanelDragListener() : View.OnDragListener {
+private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDragListener {
+
+    val game : SimpleJustWhenActivity = parent
 
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
         //println("PANEL")
@@ -40,6 +42,12 @@ private class GamePanelDragListener() : View.OnDragListener {
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
+                    val currentcard = game.findViewById(R.id.currentCardLayout) as FrameLayout
+                    currentcard.removeAllViews()
+                    val card = currentcard.getTag(R.id.simpleGameCardImageView) as ImageView
+                    (v as FrameLayout).addView(card)
+                    v.invalidate()
+                    currentcard.invalidate()
                     //println("DROP in ")
                     return true
                 }
@@ -85,7 +93,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         val job = Job()
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
         val scopeIO = CoroutineScope(job + Dispatchers.IO)
-
+        val listener = GamePanelDragListener(this)
         setContentView(R.layout.activity_simple_just_when)
         supportActionBar?.hide()
 
@@ -95,11 +103,8 @@ class SimpleJustWhenActivity : AppCompatActivity() {
             scopeMainThread.launch {
                 val currentcard = findViewById(R.id.currentCardLayout) as FrameLayout
                 currentcard.addView(card)
-                val listener = GamePanelDragListener()
+                currentcard.setTag(R.id.simpleGameCardImageView,card)
                 val simple = findViewById(R.id.simpleBoard) as FrameLayout
-                val root = simple.getRootView()
-                //simple.setOnDragListener(listener)
-                //root.setOnDragListener(listener)
                 val after = findViewById(R.id.afterAreaLayout) as FrameLayout
                 after.setOnDragListener(listener)
                 val before = findViewById(R.id.beforeAreaLayout) as FrameLayout

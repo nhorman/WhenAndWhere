@@ -31,6 +31,7 @@ private class GameCardDragListener : View.OnDragListener {
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
+                    val card =
                     //println("ACTION_DROP")
                     return true
                 }
