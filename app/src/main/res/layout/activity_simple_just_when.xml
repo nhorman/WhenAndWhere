@@ -25,6 +25,14 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
+            <TextView
+                android:id="@+id/CurrentTextView"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:text="Current"
+                android:textAlignment="center"
+                android:textColor="#F6F5F5"
+                android:textSize="24sp" />
         </FrameLayout>
 
         <FrameLayout
