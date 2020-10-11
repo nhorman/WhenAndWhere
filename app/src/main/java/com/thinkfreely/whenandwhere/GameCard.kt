@@ -31,7 +31,6 @@ private class GameCardDragListener : View.OnDragListener {
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
-                    val card =
                     //println("ACTION_DROP")
                     return true
                 }
@@ -53,7 +52,6 @@ private class GameCardDragListener : View.OnDragListener {
                 }
             }
         //println("NO EVENT")
-        return false
     }
 }
 
@@ -90,7 +88,7 @@ private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
         shadow.draw(canvas)
     }
 }
-class GameCard(val carddata : Card) {
+class GameCard(carddata : Card) {
     val cardData = carddata
 
     fun getCardView(context : Context) : ImageView {
@@ -109,7 +107,7 @@ class GameCard(val carddata : Card) {
                     item
                 )
                 val myShadow = CardShadowBuilder(v)
-                v.startDragAndDrop(dragData, myShadow, null, 0)
+                v.startDrag(dragData, myShadow, null, 0)
             }
         }
         cardimageview.setImageDrawable(image)
@@ -118,13 +116,13 @@ class GameCard(val carddata : Card) {
 
     fun cameBefore(othercard: GameCard) : Boolean {
         val thisyear = this.cardData.year?.toInt()
-        val otheryear = this.cardData.year?.toInt()
+        val otheryear = othercard.cardData.year?.toInt()
         if (thisyear == null)
             return false
         if (otheryear == null)
             return false
 
-        if (thisyear >= otheryear) {
+        if (thisyear <= otheryear) {
             return true
         }
         return false
@@ -132,13 +130,13 @@ class GameCard(val carddata : Card) {
 
     fun cameAfter(othercard: GameCard) : Boolean {
         val thisyear = this.cardData.year?.toInt()
-        val otheryear = this.cardData.year?.toInt()
+        val otheryear = othercard.cardData.year?.toInt()
         if (thisyear == null)
             return false
         if (otheryear == null)
             return false
 
-        if (thisyear <= otheryear) {
+        if (thisyear >= otheryear) {
             return true
         }
         return false
