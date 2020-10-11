@@ -48,6 +48,7 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
                     (v as FrameLayout).addView(card)
                     v.invalidate()
                     currentcard.invalidate()
+                    game.updateBoard(v)
                     //println("DROP in ")
                     return true
                 }
@@ -81,15 +82,12 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
  */
 class SimpleJustWhenActivity : AppCompatActivity() {
 
-
-    private fun getCurrentCard() : ImageView {
-        val cardfactory = GameCardFactory(applicationContext)
+    private fun getRandomCard(cardfactory: GameCardFactory) : GameCard {
         val card = cardfactory.getRandomCard()
-        val cardview = card.getCardView(applicationContext)
-        return cardview
+        return card
     }
 
-    private fun populateGameBoard() {
+    private fun populateGameBoard(factory: GameCardFactory) {
         val job = Job()
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
         val scopeIO = CoroutineScope(job + Dispatchers.IO)
@@ -99,11 +97,18 @@ class SimpleJustWhenActivity : AppCompatActivity() {
 
 
         scopeIO.launch {
-            val card = getCurrentCard()
+            val ccard = getRandomCard(factory)
+            val ncard = getRandomCard(factory)
             scopeMainThread.launch {
                 val currentcard = findViewById(R.id.currentCardLayout) as FrameLayout
-                currentcard.addView(card)
-                currentcard.setTag(R.id.simpleGameCardImageView,card)
+                currentcard.setTag(R.id.simpleGameCardImageView,ccard.getCardView(applicationContext))
+                currentcard.setTag(R.id.simpleGameCard,ccard)
+                currentcard.addView(currentcard.getTag(R.id.simpleGameCardImageView) as ImageView)
+                val nowcard = findViewById(R.id.nowLayout) as FrameLayout
+                nowcard.setTag(R.id.simpleGameCardImageView,ncard.getCardView(applicationContext))
+                nowcard.setTag(R.id.simpleGameCard,ncard)
+                nowcard.addView(nowcard.getTag(R.id.simpleGameCardImageView) as ImageView)
+
                 val simple = findViewById(R.id.simpleBoard) as FrameLayout
                 val after = findViewById(R.id.afterAreaLayout) as FrameLayout
                 after.setOnDragListener(listener)
@@ -118,7 +123,12 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_just_when)
-        populateGameBoard()
+        val cardfactory = GameCardFactory(applicationContext)
+        populateGameBoard(cardfactory)
+    }
+
+    fun updateBoard(v: FrameLayout) {
+
     }
 
     companion object {
