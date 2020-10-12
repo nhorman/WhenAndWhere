@@ -2,27 +2,15 @@ package com.thinkfreely.whenandwhere
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipDescription
-import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.DragEvent
-import android.view.MotionEvent
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_simple_just_when.*
 import kotlinx.coroutines.*
-import android.view.View.OnLongClickListener
-import android.view.ViewGroup
-import android.widget.ImageButton
-import androidx.core.view.children
+
+private var Correct: Int = 0
+private var Incorrect: Int = 0
 
 private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDragListener {
 
@@ -43,7 +31,7 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
                 }
                 DragEvent.ACTION_DROP -> {
                     val currentcard = game.findViewById(R.id.currentCardLayout) as FrameLayout
-                    currentcard.removeAllViews()
+                    currentcard.removeView(currentcard.getChildAt(1))
                     val card = currentcard.getTag(R.id.simpleGameCardImageView) as ImageView
                     (v as FrameLayout).addView(card)
                     v.setTag(R.id.simpleGameCard, currentcard.getTag(R.id.simpleGameCard))
@@ -138,17 +126,26 @@ class SimpleJustWhenActivity : AppCompatActivity() {
             //We decided that the current card came after the now card
             if (ncard.cameBefore(acard)) {
                 v.setBackgroundColor(Color.GREEN)
+                Correct = Correct + 1
             } else {
                 v.setBackgroundColor(Color.RED)
+                Incorrect = Incorrect + 1
             }
         } else {
             // We decided it came before the now card
             if (ncard.cameAfter(acard)) {
                 v.setBackgroundColor(Color.GREEN)
+                Correct = Correct + 1
             } else {
                 v.setBackgroundColor(Color.RED)
+                Incorrect = Incorrect + 1
             }
         }
+        val correct = findViewById(R.id.CorrectScoreText) as TextView
+        val incorrect = findViewById(R.id.IncorrectScoreText) as TextView
+        correct.setText("Correct: " + Correct.toString())
+        incorrect.setText("Incorrect: " + Incorrect.toString())
+
         scopeIO.launch {
             val cardfactory = GameCardFactory(applicationContext)
             val newcard = getRandomCard(cardfactory)

@@ -13,79 +13,117 @@
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
+
     <LinearLayout
-        android:id="@+id/HBoardLayout"
-        android:layout_width="729dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/currentCardLayout"
-            android:layout_width="181dp"
-            android:layout_height="match_parent"
-            android:background="#000000"
-            android:gravity="center">
+        <LinearLayout
+            android:id="@+id/HBoardLayout"
+            android:layout_width="729dp"
+            android:layout_height="334dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/CurrentTextView"
+            <FrameLayout
+                android:id="@+id/currentCardLayout"
+                android:layout_width="181dp"
+                android:layout_height="347dp"
+                android:background="#000000"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/CurrentTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:text="@string/current"
+                    android:textAlignment="center"
+                    android:textColor="#F6F5F5"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/beforeAreaLayout"
+                android:layout_width="181dp"
+                android:layout_height="347dp"
+                android:background="#000000">
+
+                <TextView
+                    android:id="@+id/BeforeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:text="@string/before"
+                    android:textAlignment="center"
+                    android:textColor="#FBFBFB"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/nowLayout"
+                android:layout_width="169dp"
+                android:layout_height="347dp"
+                android:background="#000000">
+
+                <TextView
+                    android:id="@+id/NowText"
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp"
+                    android:text="@string/now"
+                    android:textAlignment="center"
+                    android:textColor="#FBFBFB"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/afterAreaLayout"
                 android:layout_width="match_parent"
-                android:layout_height="57dp"
-                android:text="@string/current"
-                android:textAlignment="center"
-                android:textColor="#F6F5F5"
-                android:textSize="24sp" />
-        </FrameLayout>
+                android:layout_height="347dp"
+                android:background="#000000">
 
-        <FrameLayout
-            android:id="@+id/beforeAreaLayout"
-            android:layout_width="181dp"
-            android:layout_height="match_parent"
-            android:background="#000000">
+                <TextView
+                    android:id="@+id/AfterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:text="@string/after"
+                    android:textAlignment="center"
+                    android:textColor="#FAFAFA"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/BeforeText"
-                android:layout_width="match_parent"
-                android:layout_height="59dp"
-                android:text="@string/before"
-                android:textAlignment="center"
-                android:textColor="#FBFBFB"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/nowLayout"
-            android:layout_width="169dp"
-            android:layout_height="match_parent"
-            android:background="#000000">
-
-            <TextView
-                android:id="@+id/NowText"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:text="@string/now"
-                android:textAlignment="center"
-                android:textColor="#FBFBFB"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/afterAreaLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#000000">
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/AfterText"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:text="@string/after"
+                android:id="@+id/CorrectScoreText"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Correct: 0"
                 android:textAlignment="center"
-                android:textColor="#FAFAFA"
+                android:textColor="#39D83F"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-        </FrameLayout>
+
+            <TextView
+                android:id="@+id/IncorrectScoreText"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Incorrect: 0"
+                android:textAlignment="center"
+                android:textColor="#D32727"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>
