@@ -122,7 +122,14 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         val now = findViewById(R.id.nowLayout) as FrameLayout
         val ncard = now.getTag(R.id.simpleGameCard) as GameCard
         val acard = v.getTag(R.id.simpleGameCard) as GameCard
+        val nyeartext = findViewById(R.id.NowYearText) as TextView
+        nyeartext.setText(ncard.getYear())
+        nyeartext.setTextColor(Color.WHITE)
+        nyeartext.invalidate()
         if (v.id == R.id.afterAreaLayout) {
+            val ayear = findViewById(R.id.AfterYearText) as TextView
+            ayear.setText(acard.getYear())
+            ayear.invalidate()
             //We decided that the current card came after the now card
             if (ncard.cameBefore(acard)) {
                 v.setBackgroundColor(Color.GREEN)
@@ -132,6 +139,9 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                 Incorrect = Incorrect + 1
             }
         } else {
+            val byear = findViewById(R.id.BeforeYearText) as TextView
+            byear.setText(acard.getYear())
+            byear.invalidate()
             // We decided it came before the now card
             if (ncard.cameAfter(acard)) {
                 v.setBackgroundColor(Color.GREEN)
@@ -151,9 +161,15 @@ class SimpleJustWhenActivity : AppCompatActivity() {
             val newcard = getRandomCard(cardfactory)
             delay(1000)
             scopeMainThread.launch {
+                val nyeartext = findViewById(R.id.NowYearText) as TextView
+                val ayear = findViewById(R.id.AfterYearText) as TextView
+                val byear = findViewById(R.id.BeforeYearText) as TextView
+                nyeartext.setText("")
+                ayear.setText("")
+                byear.setText("")
                 v.setBackgroundColor(Color.BLACK)
-                v.removeView(v.getChildAt(1))
-                now.removeView(now.getChildAt(1))
+                v.removeView(v.getChildAt(2))
+                now.removeView(now.getChildAt(2))
                 now.addView(v.getTag(R.id.simpleGameCardImageView) as ImageView)
                 now.setTag(R.id.simpleGameCardImageView, v.getTag(R.id.simpleGameCardImageView))
                 now.setTag(R.id.simpleGameCard, v.getTag(R.id.simpleGameCard))

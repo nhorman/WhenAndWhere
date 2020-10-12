@@ -141,4 +141,11 @@ class GameCard(carddata : Card) {
         }
         return false
     }
+
+    fun getYear() : String {
+        val year = this.cardData.year
+        if (year == null)
+            return "Unknown"
+        return year.toString()
+    }
 }

@@ -10,4 +10,6 @@
     <string name="before">Before</string>
     <string name="now">Now</string>
     <string name="after">After</string>
+    <string name="correct_0">Correct: 0</string>
+    <string name="incorrect_0">Incorrect: 0</string>
 </resources>
