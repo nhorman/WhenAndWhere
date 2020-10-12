@@ -31,8 +31,23 @@ abstract class GameCardDb : RoomDatabase() {
 }
 
 
+
+private var gamedb : Any? = null
+
 class GameCardFactory(val context: Context) {
-    val db = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db").createFromAsset("database/cards.db").build()
+
+    init {
+        val path: File = context.getDatabasePath("mycards.db").absoluteFile
+        path.delete()
+    }
+    init {
+
+        if (gamedb == null) {
+            gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
+                .createFromAsset("database/cards.db").build() as Any
+        }
+    }
+    private val db = gamedb as GameCardDb
 
     fun getRandomCard() : GameCard {
        val card = db.cardDao().getRandomCard()
@@ -42,4 +57,5 @@ class GameCardFactory(val context: Context) {
     fun getAllCards(): List<Card> {
         return db.cardDao().getAll()
     }
+
 }
