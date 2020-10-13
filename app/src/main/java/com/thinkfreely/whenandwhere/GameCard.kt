@@ -17,6 +17,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.graphics.drawable.toBitmap
 
 private class GameCardDragListener : View.OnDragListener {
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
@@ -57,8 +58,8 @@ private class GameCardDragListener : View.OnDragListener {
 
 private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
 
-    private val shadow = ColorDrawable(Color.LTGRAY)
-
+    private val iv = (v as ImageView)
+    private val shadow = BitmapDrawable(iv.drawable.toBitmap())
     // Defines a callback that sends the drag shadow dimensions and touch point back to the
     // system.
     override fun onProvideShadowMetrics(size: Point, touch: Point) {
