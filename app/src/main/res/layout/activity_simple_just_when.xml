@@ -35,7 +35,7 @@
                 <TextView
                     android:id="@+id/CurrentTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="58dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/current"
                     android:textAlignment="center"
                     android:textColor="#F6F5F5"
@@ -53,7 +53,7 @@
                 <TextView
                     android:id="@+id/BeforeText"
                     android:layout_width="match_parent"
-                    android:layout_height="59dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/before"
                     android:textAlignment="center"
                     android:textColor="#FBFBFB"
@@ -79,7 +79,7 @@
                 <TextView
                     android:id="@+id/NowText"
                     android:layout_width="match_parent"
-                    android:layout_height="61dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/now"
                     android:textAlignment="center"
                     android:textColor="#FBFBFB"
@@ -104,7 +104,7 @@
                 <TextView
                     android:id="@+id/AfterText"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/after"
                     android:textAlignment="center"
                     android:textColor="#FAFAFA"
