@@ -43,8 +43,14 @@ class GameCardFactory(val context: Context) {
     init {
 
         if (gamedb == null) {
-            gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
-                .createFromAsset("database/cards.db").build() as Any
+            try {
+                gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
+                    .createFromAsset("database/cards.db").build() as Any
+            } catch (e: Exception) {
+                println("Database Corrupted, rebuilding")
+                gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
+                    .createFromAsset("database/cards.db").build() as Any
+            }
         }
     }
     private val db = gamedb as GameCardDb
