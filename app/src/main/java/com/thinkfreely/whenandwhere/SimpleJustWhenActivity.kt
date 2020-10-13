@@ -74,6 +74,7 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
 class SimpleJustWhenActivity : AppCompatActivity() {
 
     private var seconds : Int = 0
+    lateinit var clocktimer : Timer
 
     private fun getRandomCard(cardfactory: GameCardFactory) : GameCard {
         val card = cardfactory.getRandomCard()
@@ -118,7 +119,19 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_simple_just_when)
         val cardfactory = GameCardFactory(applicationContext)
         populateGameBoard(cardfactory)
-        Timer().schedule(object: TimerTask() {
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        clocktimer.cancel()
+        clocktimer.purge()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        clocktimer = Timer()
+        clocktimer.schedule(object: TimerTask() {
             override fun run() {
                 val job = Job()
                 val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
@@ -128,7 +141,6 @@ class SimpleJustWhenActivity : AppCompatActivity() {
             }
         }, 0, 1000)
     }
-
 
     fun updateTimeClock() {
         val timeView = findViewById(R.id.TimeText) as TextView
