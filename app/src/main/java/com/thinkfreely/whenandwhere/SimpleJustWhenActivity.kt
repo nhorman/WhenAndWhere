@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.DragEvent
 import android.view.View
 import android.widget.*
 import kotlinx.coroutines.*
+import java.util.*
 
 private var Correct: Int = 0
 private var Incorrect: Int = 0
@@ -70,6 +73,8 @@ private class GamePanelDragListener(parent: SimpleJustWhenActivity) : View.OnDra
  */
 class SimpleJustWhenActivity : AppCompatActivity() {
 
+    private var seconds : Int = 0
+
     private fun getRandomCard(cardfactory: GameCardFactory) : GameCard {
         val card = cardfactory.getRandomCard()
         return card
@@ -109,9 +114,27 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_simple_just_when)
         val cardfactory = GameCardFactory(applicationContext)
         populateGameBoard(cardfactory)
+        Timer().schedule(object: TimerTask() {
+            override fun run() {
+                val job = Job()
+                val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
+                scopeMainThread.launch {
+                    updateTimeClock()
+                }
+            }
+        }, 0, 1000)
+    }
+
+
+    fun updateTimeClock() {
+        val timeView = findViewById(R.id.TimeText) as TextView
+        seconds = seconds + 1
+        timeView.setText("Time: " + seconds.toString())
+        timeView.invalidate()
     }
 
     fun updateBoard(v: FrameLayout) {

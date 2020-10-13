@@ -129,7 +129,7 @@
 
             <TextView
                 android:id="@+id/CorrectScoreText"
-                android:layout_width="fill_parent"
+                android:layout_width="94dp"
                 android:layout_height="fill_parent"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_weight="1"
@@ -141,7 +141,7 @@
 
             <TextView
                 android:id="@+id/IncorrectScoreText"
-                android:layout_width="fill_parent"
+                android:layout_width="60dp"
                 android:layout_height="fill_parent"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_weight="1"
@@ -150,6 +150,18 @@
                 android:textColor="#D32727"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Time: 0"
+                android:textAlignment="center"
+                android:textColor="#33C32E"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>
