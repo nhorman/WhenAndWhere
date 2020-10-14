@@ -9,6 +9,7 @@ import java.io.File
 @Entity
 data class Card(
     @PrimaryKey(autoGenerate = true) var rowId: Int?,
+    @ColumnInfo(name = "level") var level: Long?,
     @ColumnInfo(name = "cardlogo", typeAffinity = ColumnInfo.BLOB) var cardLogo : ByteArray?,
     @ColumnInfo(name = "year") var year : Long?,
     @ColumnInfo(name = "location") var location : String?,
