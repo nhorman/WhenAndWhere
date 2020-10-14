@@ -14,6 +14,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.ads.*
 import kotlinx.coroutines.*
 import java.lang.IndexOutOfBoundsException
 import java.util.*
@@ -84,6 +85,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     lateinit var gamecards: MutableList<GameCard>
     lateinit var mediaplayer: MediaPlayer
     private var level : Int = 1
+    private lateinit var mIntersitialAd: InterstitialAd
 
     private fun getRandomCard() : GameCard {
         val card = gamecards.get(0)
@@ -137,7 +139,9 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_simple_just_when)
         val cardfactory = GameCardFactory(applicationContext)
         populateGameBoard(cardfactory)
-
+        MobileAds.initialize(this)
+        mIntersitialAd = InterstitialAd(this)
+        mIntersitialAd.adUnitId = "ca-app-pub-1167846070848710/2102808219"
     }
 
 
@@ -287,7 +291,23 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                 }
                 val endbutton = findViewById(R.id.EndGameButton) as Button
                 endbutton.setOnClickListener {
-                    finish()
+                    mIntersitialAd.loadAd(AdRequest.Builder().build())
+                    if (mIntersitialAd.isLoaded) {
+                        mIntersitialAd.adListener = object : AdListener() {
+                            override fun onAdFailedToLoad(adError: LoadAdError) {
+                                println("Ad Failed to Load")
+                                finish()
+                            }
+                            override fun onAdClosed() {
+                                println("Ad Complete")
+                                finish()
+                            }
+                        }
+                        mIntersitialAd.show()
+                    } else {
+                        println("No Ad Available")
+                        finish()
+                    }
                 }
             }
         })

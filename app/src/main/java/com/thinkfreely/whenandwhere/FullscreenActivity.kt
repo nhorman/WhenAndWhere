@@ -10,6 +10,7 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
+import com.google.android.gms.ads.MobileAds
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -83,7 +84,6 @@ class FullscreenActivity : AppCompatActivity() {
             val intent = Intent(this, CreditActivity::class.java)
             startActivity(intent)
         }
-
 
 
         showMainGameScreen()
