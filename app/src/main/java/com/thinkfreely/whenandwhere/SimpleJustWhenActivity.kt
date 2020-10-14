@@ -99,6 +99,8 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         val listener = GamePanelDragListener(this)
         setContentView(R.layout.activity_simple_just_when)
         supportActionBar?.hide()
+        Correct = 0
+        Incorrect = 0
 
 
         mediaplayer = MediaPlayer.create(this, R.raw.epic)
