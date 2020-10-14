@@ -19,6 +19,7 @@ class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler()
+    lateinit var mediaplayer: MediaPlayer
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -41,6 +42,15 @@ class FullscreenActivity : AppCompatActivity() {
         fullscreenContentControls.visibility = View.VISIBLE
     }
 
+    override fun onPause() {
+        super.onPause()
+        mediaplayer.stop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mediaplayer.start()
+    }
 
     private fun showMainGameScreen() {
         val title = findViewById(R.id.titleView) as ImageView
@@ -56,7 +66,7 @@ class FullscreenActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val mediaplayer = MediaPlayer.create(this, R.raw.epic)
+        mediaplayer = MediaPlayer.create(this, R.raw.epic)
         mediaplayer.setVolume(1.0f, 1.0f)
         mediaplayer.start()
 
