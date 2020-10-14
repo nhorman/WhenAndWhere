@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -81,6 +82,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     private var seconds : Int = 0
     lateinit var clocktimer : Timer
     lateinit var gamecards: MutableList<GameCard>
+    lateinit var mediaplayer: MediaPlayer
     private var level : Int = 1
 
     private fun getRandomCard() : GameCard {
@@ -98,6 +100,10 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_simple_just_when)
         supportActionBar?.hide()
 
+
+        mediaplayer = MediaPlayer.create(this, R.raw.epic)
+        mediaplayer.setVolume(1.0f, 1.0f)
+        mediaplayer.start()
 
         scopeIO.launch {
             gamecards = factory.getRandomCardSet(5)
@@ -135,12 +141,14 @@ class SimpleJustWhenActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        mediaplayer.stop()
         clocktimer.cancel()
         clocktimer.purge()
     }
 
     override fun onResume() {
         super.onResume()
+        mediaplayer.start()
         clocktimer = Timer()
         clocktimer.schedule(object: TimerTask() {
             override fun run() {
@@ -273,6 +281,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
     }
 
     private fun endgame() {
+        mediaplayer.stop()
         clocktimer.cancel()
         clocktimer.purge()
         showEndResults()
