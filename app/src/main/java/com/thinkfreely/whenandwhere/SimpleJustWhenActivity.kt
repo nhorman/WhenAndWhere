@@ -99,6 +99,10 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
         val scopeIO = CoroutineScope(job + Dispatchers.IO)
         val listener = GamePanelDragListener(this)
+        val levelcount = arrayOf<Int>(10, 10, 15, 20, 20)
+        val leveleffort = arrayOf<Int>(1, 1, 2, 2, 3)
+        var count: Int = 10
+        var effort: Int = 3
         setContentView(R.layout.activity_simple_just_when)
         supportActionBar?.hide()
         Correct = 0
@@ -110,7 +114,14 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         mediaplayer.start()
 
         scopeIO.launch {
-            gamecards = factory.getRandomCardSet(5)
+            try {
+                count = levelcount[level]
+                effort = leveleffort[level]
+            } catch (e: Exception) {
+                count = 20
+                effort = 3
+            }
+            gamecards = factory.getRandomCardSet(count)
             val ccard = getRandomCard()
             val ncard = getRandomCard()
             scopeMainThread.launch {
@@ -142,6 +153,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         MobileAds.initialize(this)
         mIntersitialAd = InterstitialAd(this)
         mIntersitialAd.adUnitId = "ca-app-pub-1167846070848710/2102808219"
+        //mIntersitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
     }
 
 
@@ -291,7 +303,11 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                 }
                 val endbutton = findViewById(R.id.EndGameButton) as Button
                 endbutton.setOnClickListener {
-                    mIntersitialAd.loadAd(AdRequest.Builder().build())
+                    val adrequest = AdRequest.Builder().build()
+                    if (adrequest.isTestDevice(applicationContext)) {
+                        println("This is a test device")
+                    }
+                    mIntersitialAd.loadAd(adrequest)
                     if (mIntersitialAd.isLoaded) {
                         mIntersitialAd.adListener = object : AdListener() {
                             override fun onAdFailedToLoad(adError: LoadAdError) {
