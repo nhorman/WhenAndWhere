@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.graphics.drawable.toBitmap
+import kotlin.math.absoluteValue
 
 private class GameCardDragListener : View.OnDragListener {
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
@@ -147,6 +148,10 @@ class GameCard(carddata : Card) {
         val year = this.cardData.year
         if (year == null)
             return "Unknown"
+        val absyear = year?.absoluteValue
+        if (year < 0) {
+            return absyear.toString() + " BC"
+        }
         return year.toString()
     }
 }
