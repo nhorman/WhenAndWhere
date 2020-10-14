@@ -1,5 +1,7 @@
 package com.thinkfreely.whenandwhere
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -7,9 +9,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.DragEvent
+import android.view.Gravity
 import android.view.View
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.coroutines.*
+import java.lang.IndexOutOfBoundsException
 import java.util.*
 
 private var Correct: Int = 0
@@ -75,11 +80,15 @@ class SimpleJustWhenActivity : AppCompatActivity() {
 
     private var seconds : Int = 0
     lateinit var clocktimer : Timer
+    lateinit var gamecards: MutableList<GameCard>
+    private var level : Int = 1
 
-    private fun getRandomCard(cardfactory: GameCardFactory) : GameCard {
-        val card = cardfactory.getRandomCard()
+    private fun getRandomCard() : GameCard {
+        val card = gamecards.get(0)
+        gamecards.removeAt(0)
         return card
     }
+
 
     private fun populateGameBoard(factory: GameCardFactory) {
         val job = Job()
@@ -91,8 +100,9 @@ class SimpleJustWhenActivity : AppCompatActivity() {
 
 
         scopeIO.launch {
-            val ccard = getRandomCard(factory)
-            val ncard = getRandomCard(factory)
+            gamecards = factory.getRandomCardSet(5)
+            val ccard = getRandomCard()
+            val ncard = getRandomCard()
             scopeMainThread.launch {
                 val currentcard = findViewById(R.id.currentCardLayout) as FrameLayout
                 currentcard.setTag(R.id.simpleGameCardImageView,ccard.getCardView(applicationContext))
@@ -121,6 +131,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         populateGameBoard(cardfactory)
 
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -191,12 +202,14 @@ class SimpleJustWhenActivity : AppCompatActivity() {
         correct.setText("Correct: " + Correct.toString())
         incorrect.setText("Incorrect: " + Incorrect.toString())
 
+        if (gamecards.count() == 0) {
+            endgame()
+            return
+        }
+        val newcard = getRandomCard()
         scopeIO.launch {
-            val cardfactory = GameCardFactory(applicationContext)
-            val newcard = getRandomCard(cardfactory)
             delay(1000)
             scopeMainThread.launch {
-                val nyeartext = findViewById(R.id.NowYearText) as TextView
                 val ayear = findViewById(R.id.AfterYearText) as TextView
                 val byear = findViewById(R.id.BeforeYearText) as TextView
                 nyeartext.setText("")
@@ -212,10 +225,58 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                 current.setTag(R.id.simpleGameCardImageView,newcard.getCardView(applicationContext))
                 current.setTag(R.id.simpleGameCard,newcard)
                 current.addView(current.getTag(R.id.simpleGameCardImageView) as ImageView)
-
             }
         }
 
+    }
+
+    private fun showEndResults(){
+        val boardview = findViewById(R.id.HBoardLayout) as LinearLayout
+        val scoreview = findViewById(R.id.ScoreBoardLayout) as LinearLayout
+        scoreview.apply {
+            alpha = 1f
+            visibility = View.VISIBLE
+            animate().alpha(0f).setDuration(2000.toLong()).setListener(null)
+        }
+        boardview.apply {
+            alpha = 1f
+            visibility = View.VISIBLE
+            animate().alpha(0f).setDuration(2000.toLong()).setListener(null)
+        }
+
+        val resultview = findViewById(R.id.ResultScreenLayout) as ConstraintLayout
+        resultview.animate().alpha(1f).setDuration(2000.toLong()).setListener(object: AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                boardview.visibility = View.GONE
+                scoreview.visibility = View.GONE
+                resultview.visibility = View.VISIBLE
+                val resulttext = findViewById(R.id.ResultScreenText) as TextView
+                resulttext.setText("You got " + Correct.toString() + " right out of " + (Correct + Incorrect).toString() + " In " + seconds.toString() + " Seconds!")
+                val nextbutton = findViewById(R.id.NextLevelButton) as Button
+                nextbutton.setOnClickListener {
+                    level = level +1
+                    resulttext.setText("Level " + level.toString())
+                    scoreview.animate().alpha(0f).setDuration(2000.toLong()).setListener(object: AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            resultview.visibility = View.GONE
+                            boardview.visibility = View.VISIBLE
+                            populateGameBoard(GameCardFactory(applicationContext))
+                        }
+                    })
+                }
+                val endbutton = findViewById(R.id.EndGameButton) as Button
+                endbutton.setOnClickListener {
+                    finish()
+                }
+            }
+        })
+    }
+
+    private fun endgame() {
+        clocktimer.cancel()
+        clocktimer.purge()
+        showEndResults()
+        //finish()
     }
 
     companion object {

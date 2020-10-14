@@ -2,6 +2,8 @@ package com.thinkfreely.whenandwhere
 
 import android.content.Context
 import androidx.room.*
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import java.io.File
 
 @Entity
@@ -22,6 +24,9 @@ interface CardDao {
 
     @Query("SELECT * from card ORDER BY RANDOM() LIMIT 1")
     fun getRandomCard(): Card
+
+    @RawQuery
+    fun getRandomCardList(query : SupportSQLiteQuery): List<Card>
 
 }
 
@@ -45,11 +50,11 @@ class GameCardFactory(val context: Context) {
         if (gamedb == null) {
             try {
                 gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
-                    .createFromAsset("database/cards.db").build() as Any
+                    .createFromAsset("database/cards.db").build()
             } catch (e: Exception) {
                 println("Database Corrupted, rebuilding")
                 gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
-                    .createFromAsset("database/cards.db").build() as Any
+                    .createFromAsset("database/cards.db").build()
             }
         }
     }
@@ -62,6 +67,16 @@ class GameCardFactory(val context: Context) {
 
     fun getAllCards(): List<Card> {
         return db.cardDao().getAll()
+    }
+
+    fun getRandomCardSet(num: Int) : MutableList<GameCard> {
+        val mycards : MutableList<GameCard> = mutableListOf()
+        val query = SimpleSQLiteQuery("SELECT * FROM card ORDER BY RANDOM() LIMIT " + num.toString())
+        val cardata = db.cardDao().getRandomCardList(query)
+        for (c in cardata) {
+            mycards.add(GameCard(c))
+        }
+        return mycards
     }
 
 }

@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        <activity android:name=".CreditActivity"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape">
-        </activity>
+        <activity
+            android:name=".CreditActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme"/>
         <activity
             android:name=".SimpleJustWhenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

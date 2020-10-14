@@ -31,7 +31,6 @@ class GameSetupActivity : AppCompatActivity() {
         simple.setOnClickListener {
             val intent = Intent(this, SimpleJustWhenActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         // Upon interacting with UI controls, delay any scheduled hide()
