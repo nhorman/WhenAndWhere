@@ -270,6 +270,17 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                         override fun onAnimationEnd(animation: Animator) {
                             resultview.visibility = View.GONE
                             boardview.visibility = View.VISIBLE
+                            seconds = 0
+                            clocktimer = Timer()
+                            clocktimer.schedule(object: TimerTask() {
+                                    override fun run() {
+                                        val job = Job()
+                                        val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
+                                        scopeMainThread.launch {
+                                            updateTimeClock()
+                                        }
+                                    }
+                             }, 0, 1000)
                             populateGameBoard(GameCardFactory(applicationContext))
                         }
                     })
