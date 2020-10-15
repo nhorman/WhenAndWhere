@@ -17,4 +17,5 @@
     <string name="end_game">End Game</string>
     <string name="good_job">GOOD JOB</string>
     <string name="title_activity_when_and_where">FullscreenActivity</string>
+    <string name="worldmap">WorldMap</string>
 </resources>
