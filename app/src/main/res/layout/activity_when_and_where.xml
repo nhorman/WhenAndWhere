@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/boardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    android:theme="@style/ThemeOverlay.WhenAndWhere.FullscreenContainer"
+    tools:context=".WhenAndWhereActivity">
+
+    <ScrollView
+        android:id="@+id/CardAreaScrollView"
+        android:layout_width="196dp"
+        android:layout_height="403dp"
+        android:layout_marginEnd="506dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/CardAreaLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="522dp"
+        android:layout_height="331dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="76dp"
+        android:contentDescription="WorldMap"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/CardAreaScrollView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/worldmap" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="520dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="209dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="266dp"
+        android:layout_marginBottom="22dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#48AC2D"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.433"
+        app:layout_constraintStart_toEndOf="@+id/CardAreaScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.59" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,8 @@
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -31,21 +32,39 @@
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UselessParent" />
 
         <ImageButton
             android:id="@+id/SimpleJustWhenButton"
-            android:layout_width="match_parent"
-            android:layout_height="129dp"
+            android:layout_width="735dp"
+            android:layout_height="128dp"
             android:fadingEdge="horizontal|vertical"
             android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/SingleWhenAndWhere"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/simplejustwhen" />
 
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/SingleWhenAndWhere"
+            android:layout_width="wrap_content"
+            android:layout_height="128dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/singleplayerwhenandwhere" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

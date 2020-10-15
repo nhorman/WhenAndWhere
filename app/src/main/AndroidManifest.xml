@@ -9,13 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        <activity
+            android:name=".WhenAndWhereActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_when_and_where"
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="landscape"/>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1167846070848710~3771630023"/>
+            android:value="ca-app-pub-1167846070848710~3771630023" />
+
         <activity
             android:name=".CreditActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme"/>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".SimpleJustWhenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
