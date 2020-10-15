@@ -6,9 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,6 +22,23 @@ import android.widget.TextView
  */
 class WhenAndWhereActivity : AppCompatActivity() {
 
+    lateinit var gamecards: MutableList<GameCard>
+    lateinit var gamecarddb : GameCardFactory
+
+    private fun getGameCards() {
+        gamecards = gamecarddb.getRandomCardSet(5)
+    }
+
+    private fun populateGameBoard() {
+        val cardsview = findViewById(R.id.CardAreaLinearLayout) as LinearLayout
+        val pdensity = applicationContext.resources.displayMetrics.density
+        for (c in gamecards) {
+            val cview = c.getCardView(this)
+            cview.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (250 * pdensity).toInt())
+            cardsview.addView(cview)
+
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +46,17 @@ class WhenAndWhereActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_when_and_where)
         supportActionBar?.hide()
+        val job = Job()
+        val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
+        val scopeIO = CoroutineScope(job + Dispatchers.IO)
+        gamecarddb = GameCardFactory(this)
 
-
+        scopeIO.launch {
+            getGameCards()
+            scopeMainThread.launch {
+                populateGameBoard()
+            }
+        }
     }
 
 
