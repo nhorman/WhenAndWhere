@@ -68,7 +68,7 @@ private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
         val width: Int = view.width / 2
 
         // Sets the height of the shadow to half the height of the original View
-        val height: Int = view.height / 2
+        val height: Int = view.height / 4
 
         // The drag shadow is a ColorDrawable. This sets its dimensions to be the same as the
         // Canvas that the system will provide. As a result, the drag shadow will fill the
@@ -80,7 +80,7 @@ private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
         size.set(width, height)
 
         // Sets the touch point's position to be in the middle of the drag shadow
-        touch.set(width / 2, height / 2)
+        touch.set(width / 2, height / 4)
     }
 
     // Defines a callback that draws the drag shadow in a Canvas that the system constructs
