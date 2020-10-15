@@ -90,8 +90,9 @@ private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
         shadow.draw(canvas)
     }
 }
-class GameCard(carddata : Card) {
+class GameCard(carddata : Card, location: Location) {
     val cardData = carddata
+    val locationData = location
 
     fun getCardView(context : Context) : ImageView {
         val image = BitmapDrawable(BitmapFactory.decodeByteArray(cardData.cardLogo, 0,

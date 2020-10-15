@@ -1,12 +1,25 @@
 package com.thinkfreely.whenandwhere
 
 import android.content.Context
+import androidx.annotation.NonNull
 import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
+import androidx.room.ForeignKey.NO_ACTION
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import java.io.File
 
-@Entity
+@Entity(tableName = "locations")
+data class Location(
+    @PrimaryKey
+    @ColumnInfo(name = "location") var location: String,
+    @ColumnInfo(name = "fromleft") var fromleft: Float?,
+    @ColumnInfo(name = "fromtop") var fromtop: Float?,
+    @ColumnInfo(name = "width") var width: Int?,
+    @ColumnInfo(name = "height") var height: Int?
+)
+
+@Entity(tableName = "card", foreignKeys = [ForeignKey(entity = Location::class, parentColumns = ["location"], childColumns = ["location"], onDelete = NO_ACTION )])
 data class Card(
     @PrimaryKey(autoGenerate = true) var rowId: Int?,
     @ColumnInfo(name = "level") var level: Long?,
@@ -28,11 +41,14 @@ interface CardDao {
     fun getRandomCard(): Card
 
     @RawQuery
+    fun getCardLocation(query: SupportSQLiteQuery): Location
+
+    @RawQuery
     fun getRandomCardList(query : SupportSQLiteQuery): List<Card>
 
 }
 
-@Database(entities = arrayOf(Card::class), version = 1)
+@Database(entities = arrayOf(Card::class, Location::class), version = 1)
 abstract class GameCardDb : RoomDatabase() {
     abstract fun cardDao(): CardDao
 }
@@ -64,7 +80,9 @@ class GameCardFactory(val context: Context) {
 
     fun getRandomCard() : GameCard {
        val card = db.cardDao().getRandomCard()
-       return GameCard(card)
+        val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + card.location + "'")
+        val loc = db.cardDao().getCardLocation(lquery)
+       return GameCard(card, loc)
     }
 
     fun getAllCards(): List<Card> {
@@ -76,7 +94,9 @@ class GameCardFactory(val context: Context) {
         val query = SimpleSQLiteQuery("SELECT * FROM card ORDER BY RANDOM() LIMIT " + num.toString())
         val cardata = db.cardDao().getRandomCardList(query)
         for (c in cardata) {
-            mycards.add(GameCard(c))
+            val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + c.location + "'")
+            val ldata = db.cardDao().getCardLocation(lquery)
+            mycards.add(GameCard(c, ldata))
         }
         return mycards
     }
