@@ -278,7 +278,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                 resultview.visibility = View.VISIBLE
                 val resulttext = findViewById(R.id.ResultScreenText) as TextView
                 resulttext.setText("You got " + Correct.toString() + " right out of " + (Correct + Incorrect).toString() + " In " + seconds.toString() + " Seconds!")
-                val nextbutton = findViewById(R.id.NextLevelButton) as Button
+                val nextbutton = findViewById(R.id.NextLevelButton) as ImageButton
                 nextbutton.setOnClickListener {
                     level = level +1
                     resulttext.setText("Level " + level.toString())
@@ -301,7 +301,7 @@ class SimpleJustWhenActivity : AppCompatActivity() {
                         }
                     })
                 }
-                val endbutton = findViewById(R.id.EndGameButton) as Button
+                val endbutton = findViewById(R.id.EndGameButton) as ImageButton
                 endbutton.setOnClickListener {
                     val adrequest = AdRequest.Builder().build()
                     if (adrequest.isTestDevice(applicationContext)) {

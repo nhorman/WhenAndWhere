@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:visibility="invisible">
 
-        <Button
+        <ImageButton
             android:id="@+id/NextLevelButton"
             android:layout_width="148dp"
             android:layout_height="65dp"
@@ -29,14 +29,15 @@
             android:layout_marginTop="250dp"
             android:layout_marginEnd="83dp"
             android:layout_marginBottom="96dp"
-            android:text="@string/next_level"
+            android:contentDescription="NextLevel"
+            android:src="@drawable/nextlevel"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/EndGameButton"
             android:layout_width="148dp"
             android:layout_height="65dp"
@@ -44,7 +45,7 @@
             android:layout_marginTop="250dp"
             android:layout_marginEnd="519dp"
             android:layout_marginBottom="96dp"
-            android:text="@string/end_game"
+            android:src="@drawable/endgame"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
