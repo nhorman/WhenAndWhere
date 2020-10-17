@@ -160,6 +160,7 @@ class GameCard(carddata : Card, location: Location) {
             layoutp.setMargins(left, top, right, bottom)
             flayout.layoutParams = layoutp
             flayout.setBackgroundColor(Color.RED)
+            flayout.setTag(R.id.simpleGameCard, this)
             p.addView(flayout)
         }
 

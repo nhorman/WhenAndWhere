@@ -30,6 +30,10 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                 }
                 DragEvent.ACTION_DRAG_ENTERED -> {
                     println("ENTERED")
+                    val card = v?.getTag(R.id.simpleGameCard) as GameCard
+                    val loctext = game.findViewById(R.id.InfoText) as TextView
+                    loctext.setText(card.locationData.location)
+                    loctext.invalidate()
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
@@ -38,18 +42,6 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                 }
                 DragEvent.ACTION_DRAG_LOCATION -> {
                     println("ACTION_LOCATION")
-                    val loctext = game.findViewById(R.id.InfoText) as TextView
-
-                    for (c in cards) {
-                        if (c.inHotSpot(event.x, event.y)) {
-                            println("Entered " + c.locationData.location + " at " +event.x.toString() + " " + event.y.toString())
-                            loctext.setText(c.locationData.location)
-                            loctext.invalidate()
-                            return true
-                        }
-                    }
-                    loctext.setText("")
-                    loctext.invalidate()
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENDED -> {
@@ -57,8 +49,10 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     return true
                 }
                 DragEvent.ACTION_DRAG_EXITED -> {
-
                     println("EXITED")
+                    val loctext = game.findViewById(R.id.InfoText) as TextView
+                    loctext.setText("")
+                    loctext.invalidate()
                     return true
                 }
                 else -> {
