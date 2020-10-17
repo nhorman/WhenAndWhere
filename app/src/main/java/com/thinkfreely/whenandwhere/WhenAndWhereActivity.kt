@@ -20,16 +20,15 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
 
     val game : WhenAndWhereActivity = parent
     val cards = mycards
-
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
         //println("PANEL")
         when (event?.action) {
                 DragEvent.ACTION_DRAG_STARTED -> {
-                    println("ACTION_DRAG_STARTED")
+                    //println("ACTION_DRAG_STARTED")
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENTERED -> {
-                    println("ENTERED")
+                    //println("ENTERED")
                     val card = v?.getTag(R.id.simpleGameCard) as GameCard
                     val loctext = game.findViewById(R.id.InfoText) as TextView
                     loctext.setText(card.locationData.location)
@@ -37,19 +36,27 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
-                    println("DROP at " + event.x.toString() + " " + event.y.toString())
+                    val hotspotcard = v?.getTag(R.id.simpleGameCard) as GameCard
+                    val dragcard = hotspotcard.getDragCard()
+                    val infotext = game.findViewById(R.id.CorrectTextView) as TextView
+                    if (hotspotcard === dragcard) {
+                        infotext.setText("CORRECT")
+                    } else {
+                        infotext.setText("INCORRECT")
+                    }
+                    infotext.invalidate()
                     return true
                 }
                 DragEvent.ACTION_DRAG_LOCATION -> {
-                    println("ACTION_LOCATION")
+                    //println("ACTION_LOCATION")
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENDED -> {
-                    println("ACTION_ENDED")
+                    //println("ACTION_ENDED")
                     return true
                 }
                 DragEvent.ACTION_DRAG_EXITED -> {
-                    println("EXITED")
+                    //println("EXITED")
                     val loctext = game.findViewById(R.id.InfoText) as TextView
                     loctext.setText("")
                     loctext.invalidate()

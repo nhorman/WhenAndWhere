@@ -22,7 +22,9 @@ import kotlin.math.absoluteValue
 
 private var hotspotmap: MutableMap<String, FrameLayout> = mutableMapOf()
 
-private class GameCardDragListener : View.OnDragListener {
+private class GameCardDragListener() : View.OnDragListener {
+
+
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
         //println("CARD")
         when (event?.action) {
@@ -47,6 +49,7 @@ private class GameCardDragListener : View.OnDragListener {
                     return true
                 }
                 DragEvent.ACTION_DRAG_EXITED -> {
+                    GameCard.dragcard == null
                     //println("EXITED")
                     return true
                 }
@@ -57,6 +60,7 @@ private class GameCardDragListener : View.OnDragListener {
             }
         //println("NO EVENT")
     }
+
 }
 
 private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
@@ -100,15 +104,18 @@ class GameCard(carddata : Card, location: Location) {
     var bottom: Int = 0
     var right: Int = 0
     var left: Int = 0
+    private val draglistener = GameCardDragListener()
+
 
     fun getCardView(context : Context) : ImageView {
+        val myself = this
         val image = BitmapDrawable(BitmapFactory.decodeByteArray(cardData.cardLogo, 0,
             cardData.cardLogo?.size!!
         ))
         val cardimageview = ImageView(context).apply {
             setImageBitmap(image.bitmap)
             val tag = "image bitmap"
-            setOnDragListener(GameCardDragListener())
+            setOnDragListener(draglistener)
             setOnLongClickListener {v: View ->
                 val item = ClipData.Item(v.tag as? CharSequence)
                 val dragData = ClipData(
@@ -117,6 +124,7 @@ class GameCard(carddata : Card, location: Location) {
                     item
                 )
                 val myShadow = CardShadowBuilder(v)
+                dragcard = myself
                 v.startDrag(dragData, myShadow, null, 0)
             }
         }
@@ -173,6 +181,13 @@ class GameCard(carddata : Card, location: Location) {
         return flayout
     }
 
+    fun isMyHotspot(v: View) : Boolean
+    {
+        if (v == hotspotview)
+            return true
+        return false
+    }
+
     fun inHotSpot(x: Float, y: Float) : Boolean {
         if (x.toInt() >= left && x.toInt() <= right && y.toInt() >= top && y.toInt() <= bottom)
             return true
@@ -216,5 +231,13 @@ class GameCard(carddata : Card, location: Location) {
             return absyear.toString() + " BC"
         }
         return year.toString()
+    }
+
+    fun getDragCard(): GameCard {
+        return dragcard
+    }
+
+    companion object {
+        lateinit var dragcard: GameCard
     }
 }

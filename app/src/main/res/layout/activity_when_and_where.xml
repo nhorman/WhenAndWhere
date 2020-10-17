@@ -29,11 +29,11 @@
 
     <TextView
         android:id="@+id/InfoText"
-        android:layout_width="524dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="209dp"
+        android:layout_width="294dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="266dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="#48AC2D"
@@ -41,7 +41,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/CardAreaScrollView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,5 +83,23 @@
 
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/CorrectTextView"
+        android:layout_width="254dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="13dp"
+        android:text="Correct: 0"
+        android:textAlignment="center"
+        android:textColor="#2DAF33"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/InfoText"
+        app:layout_constraintTop_toBottomOf="@+id/WorldMapConstraintLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
