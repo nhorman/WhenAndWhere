@@ -13,10 +13,12 @@ import java.io.File
 data class Location(
     @PrimaryKey
     @ColumnInfo(name = "location") var location: String,
-    @ColumnInfo(name = "fromleft") var fromleft: Float?,
-    @ColumnInfo(name = "fromtop") var fromtop: Float?,
-    @ColumnInfo(name = "width") var width: Int?,
-    @ColumnInfo(name = "height") var height: Int?
+    @ColumnInfo(name = "longitude") var longitude: Float,
+    @ColumnInfo(name = "latitude") var latitude: Float,
+    @ColumnInfo(name = "longdir") var longdir: String?,
+    @ColumnInfo(name = "latdir") var latdir: String?,
+    @ColumnInfo(name = "width") var width: Int,
+    @ColumnInfo(name = "height") var height: Int
 )
 
 @Entity(tableName = "card", foreignKeys = [ForeignKey(entity = Location::class, parentColumns = ["location"], childColumns = ["location"], onDelete = NO_ACTION )])

@@ -20,6 +20,8 @@ import android.widget.*
 import androidx.core.graphics.drawable.toBitmap
 import kotlin.math.absoluteValue
 
+private var hotspotmap: MutableMap<String, FrameLayout> = mutableMapOf()
+
 private class GameCardDragListener : View.OnDragListener {
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
         //println("CARD")
@@ -93,6 +95,11 @@ private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
 class GameCard(carddata : Card, location: Location) {
     val cardData = carddata
     val locationData = location
+    lateinit var hotspotview: FrameLayout
+    var top : Int = 0
+    var bottom: Int = 0
+    var right: Int = 0
+    var left: Int = 0
 
     fun getCardView(context : Context) : ImageView {
         val image = BitmapDrawable(BitmapFactory.decodeByteArray(cardData.cardLogo, 0,
@@ -115,6 +122,61 @@ class GameCard(carddata : Card, location: Location) {
         }
         cardimageview.setImageDrawable(image)
         return cardimageview
+    }
+
+    fun setLocationMarkerView(p: ViewGroup, density: Float) : FrameLayout {
+        println("Layout for " + this.locationData.location)
+        lateinit var flayout : FrameLayout
+
+        var fromtoptmp: Float = locationData.latitude
+        var fromlefttmp: Float = locationData.longitude
+
+        //percentage of the way down the screen
+        if (locationData.latdir.equals("North")) {
+            fromtoptmp = 1 - (fromtoptmp / 90.toFloat())
+        }
+        else {
+            0.5 + fromtoptmp / 180.toFloat()
+        }
+        fromtoptmp = (fromtoptmp - ((locationData.height/2).toFloat() / 90.toFloat()))
+        //bias up about 10%
+        top = (fromtoptmp * p.height.toFloat()).toInt() - 20
+        bottom = top + (locationData.height).toInt()
+
+        if (locationData.longdir.equals("West")) {
+            fromlefttmp = 1 - (fromlefttmp / 180.toFloat())
+        } else {
+            fromlefttmp = (0.5 + fromlefttmp / 360.toFloat()).toFloat()
+        }
+        fromlefttmp = fromlefttmp - ((locationData.width/2).toFloat() / 180.toFloat())
+        left = (fromlefttmp * (p.width.toFloat())).toInt() + 20
+        right = left + (locationData.width).toInt()
+
+        if (hotspotmap.containsKey(this.locationData.location)) {
+            flayout = hotspotmap.get(this.locationData.location) as FrameLayout
+        } else {
+            flayout = FrameLayout(p.context)
+            hotspotmap.set(this.locationData.location, flayout)
+            val layoutp = FrameLayout.LayoutParams(this.locationData.width, this.locationData.height)
+            layoutp.setMargins(left, top, right, bottom)
+            flayout.layoutParams = layoutp
+            flayout.setBackgroundColor(Color.RED)
+            p.addView(flayout)
+        }
+
+        println("top =" + top.toString())
+        println("bottom =" + bottom.toString())
+        println("left =" + left.toString())
+        println("right =" + right.toString())
+        println("view =" + p.height.toString() + " " + p.width.toString())
+        hotspotview = flayout
+        return flayout
+    }
+
+    fun inHotSpot(x: Float, y: Float) : Boolean {
+        if (x.toInt() >= left && x.toInt() <= right && y.toInt() >= top && y.toInt() <= bottom)
+            return true
+        return false
     }
 
     fun cameBefore(othercard: GameCard) : Boolean {
