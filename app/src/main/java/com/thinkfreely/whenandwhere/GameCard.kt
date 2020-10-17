@@ -136,7 +136,7 @@ class GameCard(carddata : Card, location: Location) {
             fromtoptmp = 1 - (fromtoptmp / 90.toFloat())
         }
         else {
-            0.5 + fromtoptmp / 180.toFloat()
+            fromtoptmp = (0.5 + fromtoptmp / 180.toFloat()).toFloat()
         }
         fromtoptmp = (fromtoptmp - ((locationData.height/2).toFloat() / 90.toFloat()))
         top = (fromtoptmp * p.height.toFloat()).toInt()
