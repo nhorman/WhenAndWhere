@@ -139,9 +139,8 @@ class GameCard(carddata : Card, location: Location) {
             0.5 + fromtoptmp / 180.toFloat()
         }
         fromtoptmp = (fromtoptmp - ((locationData.height/2).toFloat() / 90.toFloat()))
-        //bias up about 10%
-        top = (fromtoptmp * p.height.toFloat()).toInt() - 20
-        bottom = top + (locationData.height).toInt()
+        top = (fromtoptmp * p.height.toFloat()).toInt()
+        bottom = top + (locationData.height)
 
         if (locationData.longdir.equals("West")) {
             fromlefttmp = 1 - (fromlefttmp / 180.toFloat())
@@ -149,8 +148,8 @@ class GameCard(carddata : Card, location: Location) {
             fromlefttmp = (0.5 + fromlefttmp / 360.toFloat()).toFloat()
         }
         fromlefttmp = fromlefttmp - ((locationData.width/2).toFloat() / 180.toFloat())
-        left = (fromlefttmp * (p.width.toFloat())).toInt() + 20
-        right = left + (locationData.width).toInt()
+        left = (fromlefttmp * (p.width.toFloat())).toInt()
+        right = left + (locationData.width)
 
         if (hotspotmap.containsKey(this.locationData.location)) {
             flayout = hotspotmap.get(this.locationData.location) as FrameLayout

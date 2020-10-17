@@ -94,8 +94,8 @@ class WhenAndWhereActivity : AppCompatActivity() {
             val lhotspot = c.setLocationMarkerView(overlay, pdensity)
             lhotspot.setOnDragListener(draglistener)
         }
-        worldview.setOnDragListener(draglistener)
-        overlay.setOnDragListener(draglistener)
+        //worldview.setOnDragListener(draglistener)
+        //overlay.setOnDragListener(draglistener)
     }
 
     @SuppressLint("ClickableViewAccessibility")
