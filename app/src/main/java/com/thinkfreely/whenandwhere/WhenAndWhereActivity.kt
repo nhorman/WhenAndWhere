@@ -36,11 +36,13 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
+                    val cardlistview = game.findViewById(R.id.CardAreaLinearLayout) as LinearLayout
                     val hotspotcard = v?.getTag(R.id.simpleGameCard) as GameCard
                     val dragcard = hotspotcard.getDragCard()
                     val infotext = game.findViewById(R.id.CorrectTextView) as TextView
-                    if (hotspotcard === dragcard) {
+                    if (dragcard.isMyHotspot(v)) {
                         infotext.setText("CORRECT")
+                        cardlistview.removeView(dragcard.cardview)
                     } else {
                         infotext.setText("INCORRECT")
                     }

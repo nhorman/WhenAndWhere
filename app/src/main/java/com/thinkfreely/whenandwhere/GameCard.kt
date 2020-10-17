@@ -100,6 +100,7 @@ class GameCard(carddata : Card, location: Location) {
     val cardData = carddata
     val locationData = location
     lateinit var hotspotview: FrameLayout
+    lateinit var cardview: ImageView
     var top : Int = 0
     var bottom: Int = 0
     var right: Int = 0
@@ -129,6 +130,7 @@ class GameCard(carddata : Card, location: Location) {
             }
         }
         cardimageview.setImageDrawable(image)
+        this.cardview = cardimageview
         return cardimageview
     }
 
@@ -188,11 +190,6 @@ class GameCard(carddata : Card, location: Location) {
         return false
     }
 
-    fun inHotSpot(x: Float, y: Float) : Boolean {
-        if (x.toInt() >= left && x.toInt() <= right && y.toInt() >= top && y.toInt() <= bottom)
-            return true
-        return false
-    }
 
     fun cameBefore(othercard: GameCard) : Boolean {
         val thisyear = this.cardData.year?.toInt()
