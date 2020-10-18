@@ -29,11 +29,11 @@
 
     <TextView
         android:id="@+id/InfoText"
-        android:layout_width="294dp"
-        android:layout_height="70dp"
+        android:layout_width="263dp"
+        android:layout_height="79dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="266dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="#48AC2D"
@@ -46,8 +46,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/WorldMapConstraintLayout"
-        android:layout_width="546dp"
-        android:layout_height="331dp"
+        android:layout_width="520dp"
+        android:layout_height="310dp"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,37 +57,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/WorldMapOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/worldmap" />
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="15dp">
 
-        <RelativeLayout
-            android:id="@+id/mapOverlayLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/worldmap"
+                tools:layout_editor_absoluteX="7dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/CorrectTextView"
-        android:layout_width="254dp"
-        android:layout_height="73dp"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="4dp"
@@ -99,7 +90,29 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toEndOf="@+id/InfoText"
-        app:layout_constraintTop_toBottomOf="@+id/WorldMapConstraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/WorldMapConstraintLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/IncorrectTextView"
+        android:layout_width="241dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="14dp"
+        android:text="Incorrect: 0"
+        android:textAlignment="center"
+        android:textColor="#D11D1D"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.366"
+        app:layout_constraintStart_toEndOf="@+id/InfoText"
+        app:layout_constraintTop_toBottomOf="@+id/CorrectTextView"
+        app:layout_constraintVertical_bias="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

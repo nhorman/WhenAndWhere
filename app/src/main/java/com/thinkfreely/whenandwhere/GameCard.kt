@@ -17,6 +17,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.graphics.drawable.toBitmap
 import kotlin.math.absoluteValue
 
@@ -107,7 +109,6 @@ class GameCard(carddata : Card, location: Location) {
     var left: Int = 0
     private val draglistener = GameCardDragListener()
 
-
     fun getCardView(context : Context) : ImageView {
         val myself = this
         val image = BitmapDrawable(BitmapFactory.decodeByteArray(cardData.cardLogo, 0,
@@ -134,7 +135,7 @@ class GameCard(carddata : Card, location: Location) {
         return cardimageview
     }
 
-    fun setLocationMarkerView(p: ViewGroup, density: Float) : FrameLayout {
+    fun setLocationMarkerView(p: ConstraintLayout, density: Float) : FrameLayout {
         println("Layout for " + this.locationData.location)
         lateinit var flayout : FrameLayout
 
@@ -143,7 +144,7 @@ class GameCard(carddata : Card, location: Location) {
 
         //percentage of the way down the screen
         if (locationData.latdir.equals("North")) {
-            fromtoptmp = 1 - (fromtoptmp / 90.toFloat())
+            fromtoptmp = (1 - (fromtoptmp / 90.toFloat())).toFloat()
         }
         else {
             fromtoptmp = (0.5 + fromtoptmp / 180.toFloat()).toFloat()
@@ -153,7 +154,7 @@ class GameCard(carddata : Card, location: Location) {
         bottom = top + (locationData.height)
 
         if (locationData.longdir.equals("West")) {
-            fromlefttmp = 1 - (fromlefttmp / 180.toFloat())
+            fromlefttmp = (0.5 - fromlefttmp / 360.toFloat()).toFloat()
         } else {
             fromlefttmp = (0.5 + fromlefttmp / 360.toFloat()).toFloat()
         }
@@ -165,13 +166,24 @@ class GameCard(carddata : Card, location: Location) {
             flayout = hotspotmap.get(this.locationData.location) as FrameLayout
         } else {
             flayout = FrameLayout(p.context)
+            flayout.id = View.generateViewId()
             hotspotmap.set(this.locationData.location, flayout)
-            val layoutp = FrameLayout.LayoutParams(this.locationData.width, this.locationData.height)
-            layoutp.setMargins(left, top, right, bottom)
-            flayout.layoutParams = layoutp
+            //val layoutp = FrameLayout.LayoutParams(this.locationData.width, this.locationData.height)
+            //layoutp.setMargins(left, top, right, bottom)
+            val constraints = ConstraintSet()
+            constraints.clone(p)
+            //flayout.layoutParams = layoutp
             flayout.setBackgroundColor(Color.RED)
             flayout.setTag(R.id.simpleGameCard, this)
             p.addView(flayout)
+            constraints.connect(flayout.id, ConstraintSet.TOP, p.id, ConstraintSet.TOP, top)
+            //constraints.connect(flayout.id, ConstraintSet.BOTTOM, p.id, ConstraintSet.BOTTOM, bottom)
+            constraints.connect(flayout.id, ConstraintSet.LEFT, p.id, ConstraintSet.LEFT, left)
+            //constraints.connect(flayout.id, ConstraintSet.RIGHT, p.id, ConstraintSet.RIGHT, right)
+            constraints.constrainHeight(flayout.id, (this.locationData.height * density).toInt())
+            constraints.constrainWidth(flayout.id, (this.locationData.width * density).toInt())
+            constraints.applyTo(p)
+
         }
 
         println("top =" + top.toString())

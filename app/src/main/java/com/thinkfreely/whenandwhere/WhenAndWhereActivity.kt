@@ -39,14 +39,20 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     val cardlistview = game.findViewById(R.id.CardAreaLinearLayout) as LinearLayout
                     val hotspotcard = v?.getTag(R.id.simpleGameCard) as GameCard
                     val dragcard = hotspotcard.getDragCard()
-                    val infotext = game.findViewById(R.id.CorrectTextView) as TextView
+                    val correcttext = game.findViewById(R.id.CorrectTextView) as TextView
+                    val incorrecttext = game.findViewById(R.id.IncorrectTextView) as TextView
+
                     if (dragcard.isMyHotspot(v)) {
-                        infotext.setText("CORRECT")
-                        cardlistview.removeView(dragcard.cardview)
+                        game.Correct++
+                        correcttext.setText("CORRECT: " + game.Correct.toString())
+                        correcttext.invalidate()
                     } else {
-                        infotext.setText("INCORRECT")
+                        game.Incorrect++
+                        incorrecttext.setText("INCORRECT: " + game.Incorrect.toString())
+                        incorrecttext.invalidate()
                     }
-                    infotext.invalidate()
+                    cardlistview.removeView(dragcard.cardview)
+                    cardlistview.invalidate()
                     return true
                 }
                 DragEvent.ACTION_DRAG_LOCATION -> {
@@ -79,6 +85,8 @@ class WhenAndWhereActivity : AppCompatActivity() {
 
     lateinit var gamecards: MutableList<GameCard>
     lateinit var gamecarddb : GameCardFactory
+    var Correct: Int = 0
+    var Incorrect: Int = 0
 
     private fun getGameCards() {
         gamecards = gamecarddb.getRandomCardSet(5)
@@ -87,8 +95,7 @@ class WhenAndWhereActivity : AppCompatActivity() {
     private fun populateGameBoard() {
         val pdensity = applicationContext.resources.displayMetrics.density
         val cardsview = findViewById(R.id.CardAreaLinearLayout) as LinearLayout
-        val worldview = findViewById(R.id.WorldMapConstraintLayout) as ConstraintLayout
-        val overlay = findViewById(R.id.mapOverlayLayout) as RelativeLayout
+        val overlay = findViewById(R.id.WorldMapOverlay) as ConstraintLayout
         val draglistener = WorldMapDragListener(this, gamecards)
         for (c in gamecards) {
             val cview = c.getCardView(this)
