@@ -53,6 +53,11 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     }
                     cardlistview.removeView(dragcard.cardview)
                     cardlistview.invalidate()
+                    if ((game.Correct + game.Incorrect) == game.gamecards.count()) {
+                        // If we dropped all the cards, its time to move on to the when portion of our game
+
+                    }
+
                     return true
                 }
                 DragEvent.ACTION_DRAG_LOCATION -> {
@@ -89,7 +94,7 @@ class WhenAndWhereActivity : AppCompatActivity() {
     var Incorrect: Int = 0
 
     private fun getGameCards() {
-        gamecards = gamecarddb.getRandomCardSet(5)
+        gamecards = gamecarddb.getRandomCardSet(2)
     }
 
     private fun populateGameBoard() {
