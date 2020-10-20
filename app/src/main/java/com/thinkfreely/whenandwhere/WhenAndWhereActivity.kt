@@ -2,8 +2,10 @@ package com.thinkfreely.whenandwhere
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import android.view.DragEvent
 import android.view.MotionEvent
 import android.view.View
@@ -54,6 +56,13 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     cardlistview.removeView(dragcard.cardview)
                     cardlistview.invalidate()
                     if ((game.Correct + game.Incorrect) == game.gamecards.count()) {
+                        val intent = Intent(game, WhenAfterWhereActivity::class.java).apply {
+                            val tcards = arrayListOf<GameCard>()
+                            tcards.addAll(game.gamecards)
+                            putParcelableArrayListExtra("GAMECARDS", tcards)
+                        }
+                        game.startActivity(intent)
+                        game.finish()
                         // If we dropped all the cards, its time to move on to the when portion of our game
 
                     }

@@ -10,11 +10,18 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <activity
+            android:name=".WhenAfterWhereActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_when_after_where"
+            android:theme="@style/FullscreenTheme">
+            android:screenOrientation="landscape"
+        </activity>
+        <activity
             android:name=".WhenAndWhereActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_when_and_where"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

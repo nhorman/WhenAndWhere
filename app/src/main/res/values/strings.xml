@@ -18,4 +18,5 @@
     <string name="good_job">GOOD JOB</string>
     <string name="title_activity_when_and_where">FullscreenActivity</string>
     <string name="worldmap">WorldMap</string>
+    <string name="title_activity_when_after_where">FullscreenActivity</string>
 </resources>

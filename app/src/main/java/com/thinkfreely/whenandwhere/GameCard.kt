@@ -11,6 +11,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.DragEvent
 import android.view.DragEvent.ACTION_DRAG_LOCATION
 import android.view.Gravity
@@ -20,6 +22,7 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.graphics.drawable.toBitmap
+import kotlinx.android.parcel.Parcelize
 import kotlin.math.absoluteValue
 
 private var hotspotmap: MutableMap<String, ImageView> = mutableMapOf()
@@ -152,13 +155,39 @@ class HotSpotImageView(context: Context, card: GameCard, density: Float) : Image
     }
 }
 
-class GameCard(carddata : Card, location: Location) {
+
+class GameCard(val carddata : Card, val location: Location) : Parcelable {
     val cardData = carddata
     val locationData = location
     lateinit var hotspotview: ImageView
     lateinit var cardview: ImageView
 
     private val draglistener = GameCardDragListener()
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeInt(cardData.rowId)
+        dest?.writeLong(cardData.level as Long)
+        dest?.writeString(cardData.category)
+        dest?.writeInt((carddata.cardLogo as ByteArray).size)
+        dest?.writeByteArray(carddata.cardLogo)
+        dest?.writeLong(carddata.year as Long)
+        dest?.writeString(carddata.location)
+        dest?.writeString(carddata.cardText)
+        dest?.writeString(carddata.credittext)
+        dest?.writeString(carddata.crediturl)
+
+        dest?.writeString(locationData.location)
+        dest?.writeFloat(locationData.longitude)
+        dest?.writeFloat(locationData.latitude)
+        dest?.writeString(locationData.longdir)
+        dest?.writeString(locationData.latdir)
+        dest?.writeInt(locationData.width)
+        dest?.writeInt(locationData.height)
+    }
 
     fun getCardView(context : Context) : ImageView {
         val myself = this
@@ -261,5 +290,43 @@ class GameCard(carddata : Card, location: Location) {
 
     companion object {
         lateinit var dragcard: GameCard
+        @JvmField val CREATOR = object : Parcelable.Creator<GameCard> {
+            override fun createFromParcel(parcel: Parcel): GameCard {
+                val row = parcel.readInt()
+                val level = parcel.readLong()
+                val category = parcel.readString()
+                val logolen = parcel.readInt()
+                val logo = ByteArray(logolen)
+                parcel.readByteArray(logo)
+                val carddata = Card (
+                    row,
+                    level,
+                    category,
+                    logo,
+                    parcel.readLong(),
+                    parcel.readString(),
+                    parcel.readString(),
+                    parcel.readString(),
+                    parcel.readString(),
+                )
+                val location = Location(
+                    parcel.readString() as String,
+                    parcel.readFloat(),
+                    parcel.readFloat(),
+                    parcel.readString(),
+                    parcel.readString(),
+                    parcel.readInt(),
+                    parcel.readInt()
+                )
+
+                return GameCard(carddata, location)
+            }
+
+            override fun newArray(size: Int): Array<GameCard?> {
+                return arrayOfNulls(size)
+            }
+        }
+
     }
+
 }

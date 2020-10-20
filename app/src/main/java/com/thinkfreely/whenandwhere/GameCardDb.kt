@@ -7,6 +7,7 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.ForeignKey.NO_ACTION
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import kotlinx.android.parcel.Parcelize
 import java.io.File
 
 @Entity(tableName = "locations")
@@ -23,7 +24,7 @@ data class Location(
 
 @Entity(tableName = "card", foreignKeys = [ForeignKey(entity = Location::class, parentColumns = ["location"], childColumns = ["location"], onDelete = NO_ACTION )])
 data class Card(
-    @PrimaryKey(autoGenerate = true) var rowId: Int?,
+    @PrimaryKey(autoGenerate = true) var rowId: Int,
     @ColumnInfo(name = "level") var level: Long?,
     @ColumnInfo(name = "category") var category: String?,
     @ColumnInfo(name = "cardlogo", typeAffinity = ColumnInfo.BLOB) var cardLogo : ByteArray?,
@@ -47,6 +48,9 @@ interface CardDao {
 
     @RawQuery
     fun getRandomCardList(query : SupportSQLiteQuery): List<Card>
+
+    @RawQuery
+    fun getSpecificCard(query: SupportSQLiteQuery): Card
 
 }
 
@@ -101,6 +105,12 @@ class GameCardFactory(val context: Context) {
             mycards.add(GameCard(c, ldata))
         }
         return mycards
+    }
+
+    fun getSpecificCard(row: Int): Card {
+        val query = SimpleSQLiteQuery("SELECT * FROM card WHERE rowId =" + row.toString())
+        val carddata = db.cardDao().getSpecificCard(query)
+        return carddata
     }
 
 }
