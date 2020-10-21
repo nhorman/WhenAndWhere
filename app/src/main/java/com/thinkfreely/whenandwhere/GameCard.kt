@@ -195,6 +195,7 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable {
             cardData.cardLogo?.size!!
         ))
         val cardimageview = ImageView(context).apply {
+            id = View.generateViewId()
             setImageBitmap(image.bitmap)
             val tag = "image bitmap"
             setOnDragListener(draglistener)
@@ -256,6 +257,24 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable {
         if (thisyear <= otheryear) {
             return true
         }
+        return false
+    }
+
+    fun cameBefore(year: Int) : Boolean {
+        val thisyear = this.cardData.year?.toInt()
+        if (thisyear == null)
+            return false
+        if (thisyear <= year)
+            return true
+        return false
+    }
+
+    fun cameAfter(year: Int) : Boolean {
+        val thisyear = this.cardData.year?.toInt()
+        if (thisyear == null)
+            return false
+        if (thisyear >= year)
+            return true
         return false
     }
 

@@ -65,6 +65,7 @@
                 android:layout_alignParentEnd="false"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="335dp"
+                android:background="#03FFFFFF"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/start" />
 
@@ -72,6 +73,7 @@
                 android:id="@+id/creditButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
                 app:srcCompat="@drawable/credits" />
         </RelativeLayout>
 

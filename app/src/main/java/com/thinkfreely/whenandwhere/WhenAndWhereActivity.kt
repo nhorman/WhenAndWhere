@@ -60,6 +60,9 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                             val tcards = arrayListOf<GameCard>()
                             tcards.addAll(game.gamecards)
                             putParcelableArrayListExtra("GAMECARDS", tcards)
+                            putExtra("CORRECT_COUNT", game.Correct)
+                            putExtra("INCORRECT_COUNT", game.Incorrect)
+                            putExtra("GAME_LEVEL", game.level)
                         }
                         game.startActivity(intent)
                         game.finish()
@@ -99,11 +102,20 @@ class WhenAndWhereActivity : AppCompatActivity() {
 
     lateinit var gamecards: MutableList<GameCard>
     lateinit var gamecarddb : GameCardFactory
+    var level = 1
     var Correct: Int = 0
     var Incorrect: Int = 0
 
+    var levelmap = arrayOf<Int>(5, 10, 10, 20, 20)
+
     private fun getGameCards() {
-        gamecards = gamecarddb.getRandomCardSet(2)
+        var cardnum = 20
+        try {
+            cardnum = levelmap[level]
+        } catch (e: Exception) {
+            cardnum = 20
+        }
+        gamecards = gamecarddb.getRandomCardSet(cardnum)
     }
 
     private fun populateGameBoard() {
@@ -128,6 +140,7 @@ class WhenAndWhereActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_when_and_where)
         supportActionBar?.hide()
+        level = intent.getIntExtra("GAME_LEVEL", 1)
         val job = Job()
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
         val scopeIO = CoroutineScope(job + Dispatchers.IO)

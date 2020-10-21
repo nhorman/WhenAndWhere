@@ -9,10 +9,101 @@
     android:theme="@style/ThemeOverlay.WhenAndWhere.FullscreenContainer"
     tools:context=".WhenAfterWhereActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/WhenAfterWhereScoreLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0B0A0A"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/WhenIncorrectText"
+            android:layout_width="350dp"
+            android:layout_height="97dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="18dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#CF2424"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/WhereIncorrectText" />
+
+        <TextView
+            android:id="@+id/WhenCorrectText"
+            android:layout_width="347dp"
+            android:layout_height="81dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="40dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#29B84D"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/WhereCorrectText" />
+
+        <TextView
+            android:id="@+id/WhereIncorrectText"
+            android:layout_width="332dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="28dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#C30606"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/WhereCorrectText"
+            android:layout_width="343dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="27dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#68C11A"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/EndWhenWhereGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="66dp"
+            android:layout_marginBottom="74dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/endgame" />
+
+        <ImageButton
+            android:id="@+id/NextWhenWhereLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="58dp"
+            android:layout_marginBottom="69dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/nextlevel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/WhenBoardLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#131212"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,5 +133,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
         </HorizontalScrollView>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
