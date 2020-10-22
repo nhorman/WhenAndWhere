@@ -27,46 +27,7 @@ import kotlin.math.absoluteValue
 
 private var hotspotmap: MutableMap<String, ImageView> = mutableMapOf()
 
-private class GameCardDragListener() : View.OnDragListener {
 
-
-    override fun onDrag(v: View?, event: DragEvent?): Boolean {
-        //println("CARD")
-        when (event?.action) {
-                DragEvent.ACTION_DRAG_STARTED -> {
-                    //println("ACTION_DRAG_STARTED")
-                    return true
-                }
-                DragEvent.ACTION_DRAG_ENTERED -> {
-                    //println("ACTION_DRAG_ENTERED")
-                    return true
-                }
-                DragEvent.ACTION_DROP -> {
-                    //println("ACTION_DROP")
-                    return true
-                }
-                DragEvent.ACTION_DRAG_LOCATION -> {
-                    //println("ACTION_LOCATION")
-                    return true
-                }
-                DragEvent.ACTION_DRAG_ENDED -> {
-                    //println("ACTION_ENDED")
-                    return true
-                }
-                DragEvent.ACTION_DRAG_EXITED -> {
-                    GameCard.dragcard == null
-                    //println("EXITED")
-                    return true
-                }
-                else -> {
-                    //println("UNKNOWN ACTION: " +event?.action.toString())
-                    return true
-                }
-            }
-        //println("NO EVENT")
-    }
-
-}
 
 private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
 
@@ -146,9 +107,9 @@ class HotSpotImageView(context: Context, card: GameCard, density: Float) : Image
         constraints.clone(parent)
         constraints.clear(id)
         constraints.connect(id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, top)
-        constraints.connect(id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, (bottom))
+        //constraints.connect(id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, (bottom))
         constraints.connect(id, ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, left)
-        constraints.connect(id, ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, (right))
+        //constraints.connect(id, ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, (right))
         constraints.constrainHeight(id, (locationData.height * density).toInt())
         constraints.constrainWidth(id, (locationData.width * density).toInt())
         constraints.applyTo(parent)
@@ -162,7 +123,6 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable {
     lateinit var hotspotview: ImageView
     lateinit var cardview: ImageView
 
-    private val draglistener = GameCardDragListener()
 
     override fun describeContents(): Int {
         return 0
@@ -198,7 +158,6 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable {
             id = View.generateViewId()
             setImageBitmap(image.bitmap)
             val tag = "image bitmap"
-            setOnDragListener(draglistener)
             setOnLongClickListener {v: View ->
                 val item = ClipData.Item(v.tag as? CharSequence)
                 val dragData = ClipData(
@@ -208,12 +167,20 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable {
                 )
                 val myShadow = CardShadowBuilder(v)
                 dragcard = myself
-                v.startDrag(dragData, myShadow, null, 0)
+                v.startDrag(dragData, myShadow, myself, 0)
             }
         }
         cardimageview.setImageDrawable(image)
         this.cardview = cardimageview
         return cardimageview
+    }
+
+    fun clearhotspot() {
+        try {
+            hotspotmap.remove(this.locationData.location)
+        } catch (e: Exception) {
+            // do nothing
+        }
     }
 
     fun setLocationMarkerView(parent: ConstraintLayout, density: Float) : ImageView {

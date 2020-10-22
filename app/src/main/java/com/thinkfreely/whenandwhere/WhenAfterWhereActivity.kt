@@ -19,21 +19,12 @@ private class WhenDragListener(parent: WhenAfterWhereActivity, mycards: ArrayLis
 
     val game : WhenAfterWhereActivity = parent
     val cards = mycards
-    lateinit var cardbeingmoved : GameCard
-    lateinit var cardbeingmovedimage : ImageView
-    lateinit var commingfromview : ViewGroup
+
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
         //println("PANEL")
         when (event?.action) {
                 DragEvent.ACTION_DRAG_STARTED -> {
                     //println("ACTION_DRAG_STARTED")
-                    try {
-                        cardbeingmoved = v?.getTag(R.id.simpleGameCard) as GameCard
-                        cardbeingmovedimage = v?.getTag(R.id.simpleGameCardImageView) as ImageView
-                        commingfromview = v.parent as ViewGroup
-                    } catch (e: Exception) {
-                        return true
-                    }
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENTERED -> {
@@ -42,12 +33,13 @@ private class WhenDragListener(parent: WhenAfterWhereActivity, mycards: ArrayLis
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
+                    val cardlist = game.findViewById(R.id.currentCardLinearLayout) as LinearLayout
                     val currentFrame = (v as FrameLayout)
-                    val currentposition = cardbeingmovedimage.parent as LinearLayout
-                    currentposition.removeView(cardbeingmovedimage)
-                    currentFrame.addView(cardbeingmovedimage)
-                    currentFrame.setTag(R.id.simpleGameCard, cardbeingmoved)
-                    if (currentposition.childCount == 0) {
+                    val card = event?.localState as GameCard
+                    val currentposition = card.cardview.parent as ViewGroup
+                    currentposition.removeView(card.cardview)
+                    currentFrame.addView(card.cardview)
+                    if (cardlist.childCount == 0) {
                         // Give us the score
                         game.showResults()
                     }
@@ -105,10 +97,6 @@ class WhenAfterWhereActivity : AppCompatActivity() {
             gamecardImage.layoutParams = ViewGroup.LayoutParams(300, ViewGroup.LayoutParams.MATCH_PARENT)
             gamecardImage.scaleType = ImageView.ScaleType.FIT_XY
             clayout.addView(gamecardImage)
-            gamecardImage.setOnDragListener(dragListener)
-            gamecardImage.setTag(R.id.simpleGameCard,i)
-            gamecardImage.setTag(R.id.simpleGameCardImageView, gamecardImage)
-
         }
 
         val lateText = TextView(this)

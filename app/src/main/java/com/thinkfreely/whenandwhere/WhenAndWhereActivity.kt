@@ -60,9 +60,9 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                             val tcards = arrayListOf<GameCard>()
                             tcards.addAll(game.gamecards)
                             putParcelableArrayListExtra("GAMECARDS", tcards)
-                            putExtra("CORRECT_COUNT", game.Correct)
-                            putExtra("INCORRECT_COUNT", game.Incorrect)
-                            putExtra("GAME_LEVEL", game.level)
+                            putExtra("CORRECT_COUNT", game.Correct as Int)
+                            putExtra("INCORRECT_COUNT", game.Incorrect as Int)
+                            putExtra("GAME_LEVEL", game.level as Int)
                         }
                         game.startActivity(intent)
                         game.finish()
@@ -122,11 +122,13 @@ class WhenAndWhereActivity : AppCompatActivity() {
         val pdensity = applicationContext.resources.displayMetrics.density
         val cardsview = findViewById(R.id.CardAreaLinearLayout) as LinearLayout
         val overlay = findViewById(R.id.WorldMapOverlay) as ConstraintLayout
+        overlay.removeAllViews()
         val draglistener = WorldMapDragListener(this, gamecards)
         for (c in gamecards) {
             val cview = c.getCardView(this)
             cview.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (250 * pdensity).toInt())
             cardsview.addView(cview)
+            c.clearhotspot()
             val lhotspot = c.setLocationMarkerView(overlay, pdensity)
             lhotspot.setOnDragListener(draglistener)
         }
