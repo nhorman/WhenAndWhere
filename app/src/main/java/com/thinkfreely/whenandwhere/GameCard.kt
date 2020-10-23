@@ -117,12 +117,18 @@ class HotSpotImageView(context: Context, card: GameCard, density: Float) : Image
 }
 
 
-class GameCard(val carddata : Card, val location: Location) : Parcelable {
+class GameCard(val carddata : Card, val location: Location) : Parcelable, Comparable<GameCard>{
     val cardData = carddata
     val locationData = location
     lateinit var hotspotview: ImageView
     lateinit var cardview: ImageView
 
+    override fun compareTo(other: GameCard) : Int {
+
+        val otheryear = other.cardData.year as Long
+        val thisyear = this.cardData.year as Long
+        return (thisyear - otheryear).toInt()
+    }
 
     override fun describeContents(): Int {
         return 0
@@ -170,6 +176,7 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable {
                 v.startDrag(dragData, myShadow, myself, 0)
             }
         }
+        cardimageview.setTag(R.id.simpleGameCard, this)
         cardimageview.setImageDrawable(image)
         this.cardview = cardimageview
         return cardimageview

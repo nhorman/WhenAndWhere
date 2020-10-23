@@ -137,24 +137,31 @@ class WhenAfterWhereActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 //compute the number of correct cards in the positional view
                 val placementview = findViewById(R.id.placementCardLinearLayout) as LinearLayout
-                var lastyear = -1 * Int.MAX_VALUE
                 var Correct = 0
                 var Incorrect = 0
+                gamecards.sort()
+                val answercards = mutableListOf<GameCard>()
                 for (v in placementview.children) {
                     try {
-                        val card = v.getTag(R.id.simpleGameCard) as GameCard
-                        if (card.cameAfter(lastyear)) {
-                            Correct++
-                        } else {
-                            Incorrect++
-                        }
-                        if (card.cardData.year != null) {
-                            lastyear = (card.cardData.year) as Int
+                        val fv = v as FrameLayout
+                        for (vv in fv.children) {
+                            if (vv is ImageView) {
+                                val card = vv.getTag(R.id.simpleGameCard) as GameCard
+                                answercards.add(card)
+                            }
                         }
                     }
                     catch (e: Exception) {
                         continue
                     }
+                }
+                for (i in 0..(gamecards.count()-1)) {
+                    val ac = answercards[i]
+                    val gc = gamecards[i]
+                    if (ac === gc)
+                        Correct++
+                    else
+                        Incorrect++
                 }
                 boardview.visibility = View.GONE
                 resultview.visibility = View.VISIBLE
