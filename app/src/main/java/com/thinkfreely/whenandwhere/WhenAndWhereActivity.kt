@@ -6,10 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
-import android.view.DragEvent
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +37,7 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                 DragEvent.ACTION_DROP -> {
                     val cardlistview = game.findViewById(R.id.CardAreaLinearLayout) as LinearLayout
                     val hotspotcard = v?.getTag(R.id.simpleGameCard) as GameCard
-                    val dragcard = hotspotcard.getDragCard()
+                    val dragcard = event?.localState as GameCard
                     val correcttext = game.findViewById(R.id.CorrectTextView) as TextView
                     val incorrecttext = game.findViewById(R.id.IncorrectTextView) as TextView
 
@@ -142,6 +139,7 @@ class WhenAndWhereActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_when_and_where)
         supportActionBar?.hide()
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         level = intent.getIntExtra("GAME_LEVEL", 1)
         val job = Job()
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
