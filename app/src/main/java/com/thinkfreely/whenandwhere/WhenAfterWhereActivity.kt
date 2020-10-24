@@ -185,6 +185,10 @@ class WhenAfterWhereActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
+                val answers = findViewById(R.id.AnswersButton) as Button
+                answers.setOnClickListener {
+                    
+                }
             }
         })
     }

@@ -97,6 +97,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/nextlevel" />
+
+        <Button
+            android:id="@+id/AnswersButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="78dp"
+            android:layout_marginEnd="90dp"
+            android:layout_marginBottom="69dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/EndWhenWhereGame"
+            app:layout_constraintStart_toEndOf="@+id/NextWhenWhereLevel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
