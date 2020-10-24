@@ -23,10 +23,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlin.math.absoluteValue
 
 private var hotspotmap: MutableMap<String, ImageView> = mutableMapOf()
-
+private val hotspotmutex = Mutex()
 
 
 private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
@@ -120,7 +122,6 @@ class HotSpotImageView(context: Context, card: GameCard, density: Float) : Image
 class GameCard(val carddata : Card, val location: Location) : Parcelable, Comparable<GameCard>{
     val cardData = carddata
     val locationData = location
-    lateinit var hotspotview: ImageView
     lateinit var cardview: ImageView
 
     override fun compareTo(other: GameCard) : Int {
@@ -195,6 +196,7 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable, Compar
         lateinit var flayout :ImageView
 
 
+
         if (hotspotmap.containsKey(this.locationData.location)) {
             flayout = hotspotmap.get(this.locationData.location) as ImageView
         } else {
@@ -208,14 +210,15 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable, Compar
             flayout.setTag(R.id.simpleGameCard, this)
             //flayout.layoutParams = FrameLayout.LayoutParams(right-left, top-bottom)
         }
-        hotspotview = flayout
         return flayout
     }
 
     fun isMyHotspot(v: View) : Boolean
     {
-        if (v == hotspotview)
-            return true
+        if (hotspotmap.containsKey(this.locationData.location)) {
+            if (v === hotspotmap.get(this.locationData.location))
+                return true
+        }
         return false
     }
 
