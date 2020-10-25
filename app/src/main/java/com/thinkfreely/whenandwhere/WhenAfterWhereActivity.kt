@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
@@ -40,6 +41,7 @@ private class WhenDragListener(parent: WhenAfterWhereActivity, mycards: ArrayLis
                     currentposition.removeView(card.cardview)
                     currentFrame.addView(card.cardview)
                     if (cardlist.childCount == 0) {
+                        game.mediaplayer.stop()
                         // Give us the score
                         game.showResults()
                     }
@@ -70,6 +72,7 @@ class WhenAfterWhereActivity : AppCompatActivity() {
     var WhereCorrect : Int = 0
     var WhereIncorrect: Int = 0
     private var level = 1
+    lateinit var mediaplayer: MediaPlayer
 
     private fun setupPlacementArea() {
         val playout = findViewById(R.id.placementCardLinearLayout)  as LinearLayout
@@ -119,8 +122,21 @@ class WhenAfterWhereActivity : AppCompatActivity() {
         WhereCorrect = intent.getIntExtra("CORRECT_COUNT", 0)
         WhereIncorrect = intent.getIntExtra("INCORRECT_COUNT", 0)
         level = intent.getIntExtra("GAME_LEVEL", 1)
+        mediaplayer = MediaPlayer.create(this, R.raw.epic)
+        mediaplayer.setVolume(1.0f, 1.0f)
+        mediaplayer.start()
         setupPlacementArea()
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mediaplayer.stop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mediaplayer.start()
     }
 
 

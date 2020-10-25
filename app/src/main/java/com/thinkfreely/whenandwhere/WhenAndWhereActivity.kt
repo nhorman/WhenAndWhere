@@ -3,6 +3,7 @@ package com.thinkfreely.whenandwhere
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
@@ -53,6 +54,7 @@ private class WorldMapDragListener(parent: WhenAndWhereActivity, mycards: Mutabl
                     cardlistview.removeView(dragcard.cardview)
                     cardlistview.invalidate()
                     if ((game.Correct + game.Incorrect) == game.gamecards.count()) {
+                        game.mediaplayer.stop()
                         val intent = Intent(game, WhenAfterWhereActivity::class.java).apply {
                             val tcards = arrayListOf<GameCard>()
                             tcards.addAll(game.gamecards)
@@ -102,7 +104,7 @@ class WhenAndWhereActivity : AppCompatActivity() {
     var level = 1
     var Correct: Int = 0
     var Incorrect: Int = 0
-
+    lateinit var mediaplayer: MediaPlayer
     var levelmap = arrayOf<Int>(5, 10, 10, 20, 20)
 
     private fun getGameCards() {
@@ -145,6 +147,9 @@ class WhenAndWhereActivity : AppCompatActivity() {
         val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
         val scopeIO = CoroutineScope(job + Dispatchers.IO)
         gamecarddb = GameCardFactory(this)
+        mediaplayer = MediaPlayer.create(this, R.raw.epic)
+        mediaplayer.setVolume(1.0f, 1.0f)
+        mediaplayer.start()
 
         scopeIO.launch {
             getGameCards()
@@ -154,6 +159,16 @@ class WhenAndWhereActivity : AppCompatActivity() {
         }
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        mediaplayer.stop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mediaplayer.start()
+    }
 
     companion object {
         /**
