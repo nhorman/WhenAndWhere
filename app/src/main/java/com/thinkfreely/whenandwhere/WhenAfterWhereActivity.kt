@@ -179,15 +179,20 @@ class WhenAfterWhereActivity : AppCompatActivity() {
                 }
                 val nextbutton = findViewById(R.id.NextWhenWhereLevel) as ImageButton
                 nextbutton.setOnClickListener {
-                    intent = Intent(applicationContext, WhenAndWhereActivity::class.java).apply {
+                    val intent = Intent(applicationContext, WhenAndWhereActivity::class.java).apply {
                         putExtra("GAME_LEVEL", level+1)
                     }
                     startActivity(intent)
                     finish()
                 }
-                val answers = findViewById(R.id.AnswersButton) as Button
+                val answers = findViewById(R.id.AnswerButton) as ImageButton
+                val tcards = arrayListOf<GameCard>()
+                tcards.addAll(gamecards)
                 answers.setOnClickListener {
-                    
+                    val aintent = Intent(applicationContext, WhenAfterWhereAnswers::class.java).apply {
+                        putParcelableArrayListExtra("GAMECARDS", tcards)
+                    }
+                    startActivity(aintent)
                 }
             }
         })

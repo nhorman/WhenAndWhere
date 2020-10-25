@@ -19,4 +19,9 @@
     <string name="title_activity_when_and_where">FullscreenActivity</string>
     <string name="worldmap">WorldMap</string>
     <string name="title_activity_when_after_where">FullscreenActivity</string>
+    <string name="title_activity_when_after_where_answers">FullscreenActivity</string>
+    <string name="answers">Answers</string>
+    <string name="event">Event</string>
+    <string name="location">Location</string>
+    <string name="year">Year</string>
 </resources>
