@@ -40,7 +40,7 @@ class CreditActivity : AppCompatActivity() {
                     credittext.setText(card.credittext)
                     hlayout.addView(credittext)
                     val crediturl = TextView(baseContext)
-                    crediturl.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    crediturl.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
                     crediturl.setTextColor(Color.WHITE)
                     crediturl.gravity = Gravity.CENTER_HORIZONTAL
                     crediturl.setText(card.crediturl)
