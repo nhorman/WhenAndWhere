@@ -27,6 +27,8 @@ data class Card(
     @PrimaryKey(autoGenerate = true) var rowId: Int,
     @ColumnInfo(name = "level") var level: Long?,
     @ColumnInfo(name = "category") var category: String?,
+    @ColumnInfo(name = "cardname") var cardname: String?,
+    @ColumnInfo(name = "storyonly") var storyonly: Int?,
     @ColumnInfo(name = "cardlogo", typeAffinity = ColumnInfo.BLOB) var cardLogo : ByteArray?,
     @ColumnInfo(name = "year") var year : Long?,
     @ColumnInfo(name = "location") var location : String?,
@@ -40,7 +42,7 @@ interface CardDao {
     @Query("SELECT * from card")
     fun getAll(): List<Card>
 
-    @Query("SELECT * from card ORDER BY RANDOM() LIMIT 1")
+    @Query("SELECT * from card WHERE storyonly == 0 ORDER BY RANDOM() LIMIT 1")
     fun getRandomCard(): Card
 
     @RawQuery
@@ -97,7 +99,7 @@ class GameCardFactory(val context: Context) {
 
     fun getRandomCardSet(num: Int) : MutableList<GameCard> {
         val mycards : MutableList<GameCard> = mutableListOf()
-        val query = SimpleSQLiteQuery("SELECT * FROM card ORDER BY RANDOM() LIMIT " + num.toString())
+        val query = SimpleSQLiteQuery("SELECT * FROM card WHERE storyonly == 0 ORDER BY RANDOM() LIMIT " + num.toString())
         val cardata = db.cardDao().getRandomCardList(query)
         for (c in cardata) {
             val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + c.location + "'")

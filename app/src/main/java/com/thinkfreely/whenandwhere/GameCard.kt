@@ -19,6 +19,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.graphics.drawable.toBitmap
@@ -65,7 +66,7 @@ private class CardShadowBuilder(v: View) : View.DragShadowBuilder(v) {
     }
 }
 
-class HotSpotImageView(context: Context, card: GameCard, density: Float) : ImageView(context) {
+class HotSpotImageView(context: Context, card: GameCard, density: Float) : AppCompatImageView(context) {
 
     val locationData = card.locationData
     val density : Float = density
@@ -139,6 +140,8 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable, Compar
         dest?.writeInt(cardData.rowId)
         dest?.writeLong(cardData.level as Long)
         dest?.writeString(cardData.category)
+        dest?.writeString(cardData.cardname)
+        dest?.writeInt(cardData.storyonly as Int)
         dest?.writeInt((carddata.cardLogo as ByteArray).size)
         dest?.writeByteArray(carddata.cardLogo)
         dest?.writeLong(carddata.year as Long)
@@ -291,6 +294,8 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable, Compar
                 val row = parcel.readInt()
                 val level = parcel.readLong()
                 val category = parcel.readString()
+                val cardname = parcel.readString()
+                val storyonly = parcel.readInt()
                 val logolen = parcel.readInt()
                 val logo = ByteArray(logolen)
                 parcel.readByteArray(logo)
@@ -298,6 +303,8 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable, Compar
                     row,
                     level,
                     category,
+                    cardname,
+                    storyonly,
                     logo,
                     parcel.readLong(),
                     parcel.readString(),
