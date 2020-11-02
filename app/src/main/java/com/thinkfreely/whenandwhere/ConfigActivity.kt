@@ -46,7 +46,7 @@ class ConfigActivity : AppCompatActivity() {
                     val u = URL(urltextview.text.toString())
                     try {
                         val dis = DataInputStream(u.openStream())
-                        val f = File("newcards.db")
+                        val f = File.createTempFile("tmpcards", "db")
                         val fos = FileOutputStream(f)
                         length = dis.read(buffer)
                         while (length > 0) {
@@ -54,7 +54,7 @@ class ConfigActivity : AppCompatActivity() {
                             length = dis.read(buffer)
                         }
                         db.overrideDB(f, applicationContext)
-                        f.delete()
+                        f.deleteOnExit()
 
                     } catch (e: Exception) {
                         scopeMainThread.launch {

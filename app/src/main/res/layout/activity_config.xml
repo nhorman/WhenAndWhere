@@ -80,7 +80,7 @@
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="textPersonName"
-                    android:text="https://nhorman.github.io/whenandwhere/database/"
+                    android:text="https://nhorman.github.io/WhenAndWhere/dbupdate/cards.db"
                     android:visibility="visible" />
             </LinearLayout>
 
