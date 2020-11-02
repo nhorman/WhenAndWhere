@@ -50,6 +50,9 @@ class FullscreenActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        mediaplayer.release()
+        mediaplayer = MediaPlayer.create(this, R.raw.epic)
+        mediaplayer.setVolume(1.0f, 1.0f)
         mediaplayer.start()
     }
 
@@ -82,6 +85,13 @@ class FullscreenActivity : AppCompatActivity() {
         credit.setOnClickListener {
             mediaplayer.stop()
             val intent = Intent(this, CreditActivity::class.java)
+            startActivity(intent)
+        }
+
+        val settings = findViewById<ImageButton>(R.id.settingsButton)
+        settings.setOnClickListener {
+            mediaplayer.stop()
+            val intent = Intent(this, ConfigActivity::class.java)
             startActivity(intent)
         }
 

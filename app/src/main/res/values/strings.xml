@@ -24,4 +24,6 @@
     <string name="event">Event</string>
     <string name="location">Location</string>
     <string name="year">Year</string>
+    <string name="button">Button</string>
+    <string name="done">Done</string>
 </resources>

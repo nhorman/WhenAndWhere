@@ -66,7 +66,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="335dp"
                 android:background="#03FFFFFF"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:srcCompat="@drawable/start" />
 
             <ImageButton
@@ -75,6 +75,18 @@
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 app:srcCompat="@drawable/credits" />
+
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="312dp"
+                android:background="#02FFFFFF"
+                app:srcCompat="@drawable/settings" />
+
         </RelativeLayout>
 
     </FrameLayout>

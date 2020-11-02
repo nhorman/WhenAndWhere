@@ -113,4 +113,19 @@ class GameCardFactory(val context: Context) {
         return carddata
     }
 
+    fun overrideDB(newdb: File, context: Context) {
+        gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
+            .createFromFile(newdb).build()
+    }
+
+    fun resetDBToInternal(context: Context) {
+         gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
+                    .createFromAsset("database/cards.db").build()
+    }
+
+    companion object {
+        var custom_db : String = ""
+
+    }
+
 }

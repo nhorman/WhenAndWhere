@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thinkfreely.whenandwhere">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,12 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        <activity android:name=".ConfigActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".WhenAfterWhereAnswers"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_when_after_where_answers"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".WhenAfterWhereActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
