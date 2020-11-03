@@ -12,11 +12,17 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <activity
+            android:name=".HistoricStoriesGameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_historic_stories_game"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme"/>
+        <activity
             android:name=".HistoricStoriesSelector"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_historic_stories_selector"
             android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme"/>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".ConfigActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

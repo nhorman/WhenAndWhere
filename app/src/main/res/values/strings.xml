@@ -27,4 +27,5 @@
     <string name="button">Button</string>
     <string name="done">Done</string>
     <string name="title_activity_historic_stories_selector">FullscreenActivity</string>
+    <string name="title_activity_historic_stories_game">FullscreenActivity</string>
 </resources>

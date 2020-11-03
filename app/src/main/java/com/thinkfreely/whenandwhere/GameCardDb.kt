@@ -9,13 +9,14 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.android.parcel.Parcelize
 import java.io.File
+import java.sql.Blob
 
 @Entity(tableName = "storypage")
 data class StoryPage(
     @PrimaryKey(autoGenerate=true) var rowId: Int,
     @ColumnInfo(name = "pagenumber") var pagenumber: Int,
     @ColumnInfo(name ="storyname") var storyname: String,
-    @ColumnInfo(name = "storytext") var storytext: String,
+    @ColumnInfo(name = "storytext", typeAffinity = ColumnInfo.BLOB) var storytext: ByteArray,
     @ColumnInfo(name = "correctcardname") var correctcardname: String
 )
 
@@ -64,6 +65,15 @@ interface CardDao {
     fun getStoryList(): List<Story>
 
     @RawQuery
+    fun getStoryPages(query: SupportSQLiteQuery): List<StoryPage>
+
+    @RawQuery
+    fun getStory(query: SupportSQLiteQuery): Story
+
+    @RawQuery
+    fun getStoryCards(query: SupportSQLiteQuery): List<Card>
+
+    @RawQuery
     fun getCardLocation(query: SupportSQLiteQuery): Location
 
     @RawQuery
@@ -84,7 +94,6 @@ abstract class GameCardDb : RoomDatabase() {
 private var gamedb : Any? = null
 
 class GameCardFactory(val context: Context) {
-    val mycontext = context
 
     init {
         val path: File = context.getDatabasePath("mycards.db").absoluteFile
@@ -108,6 +117,34 @@ class GameCardFactory(val context: Context) {
 
     fun getStoryList(): List<Story> {
         return db.cardDao().getStoryList()
+    }
+
+    fun getStory(storyname: String): Story {
+        val squery = SimpleSQLiteQuery("SELECT * FROM stories WHERE storyname = '" + storyname + "'")
+        val story = db.cardDao().getStory(squery)
+        return story
+    }
+
+    fun getStoryPages(story: Story): List<StoryPage> {
+        val squery = SimpleSQLiteQuery("SELECT * FROM storypage WHERE storyname = '" + story.storyname + "'")
+        val pages = db.cardDao().getStoryPages(squery)
+        return pages
+    }
+
+    fun getStoryCards(pages: List<StoryPage>): List<GameCard> {
+        val mycards: MutableList<GameCard> = mutableListOf()
+
+        for (p in pages) {
+            val cardsnames = p.correctcardname
+            val cardlist = cardsnames.split(":")
+            for (c in cardlist) {
+                val newcarddata = this.getSpecificCard(c)
+                val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + newcarddata.location + "'")
+                val ldata = db.cardDao().getCardLocation(lquery)
+                mycards.add(GameCard(newcarddata, ldata))
+            }
+        }
+        return mycards as List<GameCard>
     }
 
     fun getRandomCard() : GameCard {
@@ -135,6 +172,12 @@ class GameCardFactory(val context: Context) {
 
     fun getSpecificCard(row: Int): Card {
         val query = SimpleSQLiteQuery("SELECT * FROM card WHERE rowId =" + row.toString())
+        val carddata = db.cardDao().getSpecificCard(query)
+        return carddata
+    }
+
+    fun getSpecificCard(name: String): Card {
+        val query = SimpleSQLiteQuery("SELECT * FROM card WHERE cardname = '" + name + "'")
         val carddata = db.cardDao().getSpecificCard(query)
         return carddata
     }
