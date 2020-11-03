@@ -18,7 +18,8 @@ data class StoryPage(
     @ColumnInfo(name ="storyname") var storyname: String,
     @ColumnInfo(name = "storytext", typeAffinity = ColumnInfo.BLOB) var storytext: ByteArray,
     @ColumnInfo(name = "correctcardname") var correctcardname: String,
-    @ColumnInfo(name = "answerordermatters") var answerordermatters: Int
+    @ColumnInfo(name = "answerordermatters") var answerordermatters: Int,
+    @ColumnInfo(name = "answertext", typeAffinity = ColumnInfo.BLOB) var answertext: ByteArray
 )
 
 @Entity(tableName = "stories")

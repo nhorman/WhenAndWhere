@@ -2,12 +2,15 @@ package com.thinkfreely.whenandwhere
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.TypedValue
 import android.view.*
 import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.children
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -32,10 +35,20 @@ private class AnswerFrameDragListener(parent: HistoricStoriesGameActivity) : Vie
                 }
                 DragEvent.ACTION_DROP -> {
                     val currentFrame = (v as FrameLayout)
+                    val cardview = game.findViewById(R.id.GameCardLayout) as ViewGroup
                     val card = event?.localState as GameCard
                     val currentposition = card.cardview.parent as ViewGroup
+                    if (currentposition === cardview) {
+                        game.answercount++
+                    }
                     currentposition.removeView(card.cardview)
                     currentFrame.addView(card.cardview)
+                    currentFrame.setTag(R.id.answer, card)
+                    if (game.answercount == game.pageanswercount) {
+                        //show the answertext, wait a bit, then prompt for the next page
+                        game.showPageAnswers()
+                    }
+
                     return true
                 }
                 DragEvent.ACTION_DRAG_LOCATION -> {
@@ -66,6 +79,8 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
 
     lateinit var story: GameStory
     var pageno = 0
+    var answercount = 0
+    var pageanswercount = 0
 
     private fun populateNextPage() {
         val storyv = findViewById(R.id.StoryText) as WebView
@@ -105,6 +120,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
             }
             answerarea.addView(nextbutton)
         } else {
+            pageanswercount = answers.count()
             for (a in answers) {
                 val answerframe = FrameLayout(this)
                 answerframe.background = applicationContext.getDrawable(R.drawable.frame)
@@ -124,6 +140,52 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
         populateNextPage()
         populateCardSet()
         populateAnswerArea()
+    }
+
+    fun showPageAnswers() {
+        var idx = 0
+        var gotitright = true
+        val answers = story.getAnswers(pageno)
+        val anstext = story.getStoryAnswer(pageno)
+        val webview = findViewById(R.id.StoryText) as WebView
+        val answerview = findViewById(R.id.AnswerCardLayout) as LinearLayout
+        for (f in answerview.children) {
+            val card = f.getTag(R.id.answer) as GameCard
+            if (story.answerOrderMatters(pageno) == true) {
+                if (card.cardData.cardname.equals(answers[idx])) {
+                    continue
+                } else {
+                    gotitright = false
+                    break
+                }
+            }
+            else {
+                if (answers.contains(card.cardData.cardname)) {
+                    continue
+                }
+                else {
+                    gotitright = false
+                    break
+                }
+            }
+        }
+
+        answerview.removeAllViews()
+        val correctframe = FrameLayout(this)
+        correctframe.layoutParams =
+                    FrameLayout.LayoutParams(400, FrameLayout.LayoutParams.MATCH_PARENT)
+        val result = TextView(this)
+        result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
+        if (gotitright == true) {
+            result.setText("CORRECT")
+            result.setTextColor(Color.GREEN)
+        } else {
+            result.setText("INCORRECT")
+            result.setTextColor(Color.RED)
+        }
+        correctframe.addView(result)
+        answerview.addView(correctframe)
+
     }
 
     @SuppressLint("ClickableViewAccessibility")

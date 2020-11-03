@@ -21,6 +21,11 @@ class GameStory(story: String, gamefactory: GameCardFactory) {
         return text
     }
 
+    fun getStoryAnswer(page: Int) : String {
+        val text = String(pages[page].answertext)
+        return text
+    }
+
     fun getGameCards(): List<GameCard> {
         return cards
     }
