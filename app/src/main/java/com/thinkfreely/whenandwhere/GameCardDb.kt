@@ -137,6 +137,8 @@ class GameCardFactory(val context: Context) {
 
         for (p in pages) {
             val cardsnames = p.correctcardname
+            if (cardsnames.isBlank() == true)
+                continue
             val cardlist = cardsnames.split(":")
             for (c in cardlist) {
                 val newcarddata = this.getSpecificCard(c)

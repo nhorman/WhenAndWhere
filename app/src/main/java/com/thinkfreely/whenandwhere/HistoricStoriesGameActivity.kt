@@ -69,8 +69,14 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
 
     private fun populateNextPage() {
         val storyv = findViewById(R.id.StoryText) as WebView
-        val storytext = story.getStoryText(pageno)
-        storyv.loadData(storytext, "text/html", "utf-8")
+        try {
+            val storytext = story.getStoryText(pageno)
+            storyv.loadData(storytext, "text/html", "utf-8")
+        } catch (e: Exception) {
+            //we hit the end of the story, display a finish page and leave
+            //for now just end the activity
+            finish()
+        }
     }
 
     private fun populateCardSet() {

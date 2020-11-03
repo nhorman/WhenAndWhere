@@ -27,6 +27,8 @@ class GameStory(story: String, gamefactory: GameCardFactory) {
 
     fun getAnswers(page: Int) : List<String>{
         val answerstring = pages[page].correctcardname
+        if (answerstring.isEmpty() == true)
+            return emptyList<String>()
         val answerlist = answerstring.split(":")
         return answerlist
     }
