@@ -2,5 +2,6 @@
 <resources>
     <item type="id" name="simpleGameCardImageView"/>
     <item type="id" name="simpleGameCard"/>
+    <item type="id" name="storyname"/>
 
 </resources>

@@ -10,6 +10,21 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.android.parcel.Parcelize
 import java.io.File
 
+@Entity(tableName = "storypage")
+data class StoryPage(
+    @PrimaryKey(autoGenerate=true) var rowId: Int,
+    @ColumnInfo(name = "pagenumber") var pagenumber: Int,
+    @ColumnInfo(name ="storyname") var storyname: String,
+    @ColumnInfo(name = "storytext") var storytext: String,
+    @ColumnInfo(name = "correctcardname") var correctcardname: String
+)
+
+@Entity(tableName = "stories")
+data class Story(
+    @PrimaryKey(autoGenerate = true) var rowId: Int,
+    @ColumnInfo(name="storyname") var storyname: String
+)
+
 @Entity(tableName = "locations")
 data class Location(
     @PrimaryKey
@@ -45,6 +60,9 @@ interface CardDao {
     @Query("SELECT * from card WHERE storyonly == 0 ORDER BY RANDOM() LIMIT 1")
     fun getRandomCard(): Card
 
+    @Query("SELECT * from stories")
+    fun getStoryList(): List<Story>
+
     @RawQuery
     fun getCardLocation(query: SupportSQLiteQuery): Location
 
@@ -56,7 +74,7 @@ interface CardDao {
 
 }
 
-@Database(entities = arrayOf(Card::class, Location::class), version = 1)
+@Database(entities = arrayOf(Card::class, Location::class, Story::class, StoryPage::class), version = 1)
 abstract class GameCardDb : RoomDatabase() {
     abstract fun cardDao(): CardDao
 }
@@ -66,6 +84,7 @@ abstract class GameCardDb : RoomDatabase() {
 private var gamedb : Any? = null
 
 class GameCardFactory(val context: Context) {
+    val mycontext = context
 
     init {
         val path: File = context.getDatabasePath("mycards.db").absoluteFile
@@ -85,6 +104,11 @@ class GameCardFactory(val context: Context) {
         }
     }
     private val db = gamedb as GameCardDb
+
+
+    fun getStoryList(): List<Story> {
+        return db.cardDao().getStoryList()
+    }
 
     fun getRandomCard() : GameCard {
        val card = db.cardDao().getRandomCard()
