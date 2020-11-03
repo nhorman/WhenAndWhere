@@ -3,5 +3,6 @@
     <item type="id" name="simpleGameCardImageView"/>
     <item type="id" name="simpleGameCard"/>
     <item type="id" name="storyname"/>
+    <item type="id" name="expectedAnswer"/>
 
 </resources>

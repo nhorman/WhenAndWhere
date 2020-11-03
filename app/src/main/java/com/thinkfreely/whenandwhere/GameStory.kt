@@ -15,4 +15,25 @@ class GameStory(story: String, gamefactory: GameCardFactory) {
         pages = factory.getStoryPages(storydata)
         cards = factory.getStoryCards(pages)
     }
+
+    fun getStoryText(page: Int) : String {
+        val text = String(pages[page].storytext)
+        return text
+    }
+
+    fun getGameCards(): List<GameCard> {
+        return cards
+    }
+
+    fun getAnswers(page: Int) : List<String>{
+        val answerstring = pages[page].correctcardname
+        val answerlist = answerstring.split(":")
+        return answerlist
+    }
+
+    fun answerOrderMatters(page: Int) : Boolean {
+        if (pages[page].answerordermatters == 0)
+            return false
+        return true
+    }
 }
