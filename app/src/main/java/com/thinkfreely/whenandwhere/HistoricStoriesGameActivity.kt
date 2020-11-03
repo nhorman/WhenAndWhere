@@ -89,16 +89,28 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
         val answers = story.getAnswers(pageno)
         val answerarea = findViewById(R.id.AnswerCardLayout) as LinearLayout
         answerarea.removeAllViews()
-        for (a in answers) {
-            val answerframe = FrameLayout(this)
-            answerframe.background = applicationContext.getDrawable(R.drawable.frame)
-            answerframe.layoutParams = FrameLayout.LayoutParams(300, FrameLayout.LayoutParams.MATCH_PARENT)
-            if (story.answerOrderMatters(pageno) == true)
-                answerframe.setTag(R.id.expectedAnswer, a)
-            else
-                answerframe.setTag(R.id.expectedAnswer, "None")
-            answerarea.addView(answerframe)
-            answerframe.setOnDragListener(listener)
+        if (answers.count() == 0) {
+            val nextbutton = Button(this)
+            nextbutton.setText("Next Page")
+            nextbutton.setOnClickListener {
+                pageno++
+                populateNextPage()
+                populateAnswerArea()
+            }
+            answerarea.addView(nextbutton)
+        } else {
+            for (a in answers) {
+                val answerframe = FrameLayout(this)
+                answerframe.background = applicationContext.getDrawable(R.drawable.frame)
+                answerframe.layoutParams =
+                    FrameLayout.LayoutParams(300, FrameLayout.LayoutParams.MATCH_PARENT)
+                if (story.answerOrderMatters(pageno) == true)
+                    answerframe.setTag(R.id.expectedAnswer, a)
+                else
+                    answerframe.setTag(R.id.expectedAnswer, "None")
+                answerarea.addView(answerframe)
+                answerframe.setOnDragListener(listener)
+            }
         }
     }
 
