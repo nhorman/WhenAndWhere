@@ -31,6 +31,9 @@ class GameStory(story: String, gamefactory: GameCardFactory) {
     }
 
     fun getAnswers(page: Int) : List<String>{
+        if (page >= pages.count()) {
+            return emptyList<String>()
+        }
         val answerstring = pages[page].correctcardname
         if (answerstring.isEmpty() == true)
             return emptyList<String>()

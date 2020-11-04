@@ -105,18 +105,22 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun populateAnswerArea() {
+    private fun goToNextPage() {
+        pageno++
+        populateNextPage()
+        populateAnswerArea()
+    }
+
+    private fun populateAnswerArea()  {
         val listener = AnswerFrameDragListener(this)
-        val answers = story.getAnswers(pageno)
         val answerarea = findViewById(R.id.AnswerCardLayout) as LinearLayout
         answerarea.removeAllViews()
+        val answers = story.getAnswers(pageno)
         if (answers.count() == 0) {
             val nextbutton = Button(this)
             nextbutton.setText("Next Page")
             nextbutton.setOnClickListener {
-                pageno++
-                populateNextPage()
-                populateAnswerArea()
+                goToNextPage()
             }
             answerarea.addView(nextbutton)
         } else {
@@ -185,6 +189,20 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
         }
         correctframe.addView(result)
         answerview.addView(correctframe)
+
+        val nextframe = FrameLayout(this)
+        nextframe.layoutParams =
+                    FrameLayout.LayoutParams(400, FrameLayout.LayoutParams.MATCH_PARENT)
+
+        val nextbutton = Button(this)
+        nextbutton.setText("Next Page")
+        nextbutton.setOnClickListener {
+            goToNextPage()
+        }
+        nextframe.addView(nextbutton)
+        answerview.addView(nextframe)
+        webview.loadData(anstext, "text/html", "utf-8")
+
 
     }
 

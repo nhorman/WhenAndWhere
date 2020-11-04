@@ -153,7 +153,7 @@ class GameCardFactory(val context: Context) {
 
     fun getRandomCard() : GameCard {
        val card = db.cardDao().getRandomCard()
-        val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + card.location + "'")
+        val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + card.location + "' AND storyonly = 0")
         val loc = db.cardDao().getCardLocation(lquery)
        return GameCard(card, loc)
     }
