@@ -13,7 +13,7 @@ class GameStory(story: String, gamefactory: GameCardFactory) {
         //Get all the story data we need from the databsae
         storydata = factory.getStory(storyname)
         pages = factory.getStoryPages(storydata)
-        cards = factory.getStoryCards(pages)
+        cards = factory.getStoryCards(pages).shuffled()
     }
 
     fun getStoryText(page: Int) : String {

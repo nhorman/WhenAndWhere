@@ -5,9 +5,13 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.*
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.children
@@ -82,11 +86,32 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
     var answercount = 0
     var pageanswercount = 0
 
+    private inner class JavascriptInterface
+    {
+        @android.webkit.JavascriptInterface
+        fun InitAnswers(doctext: String){
+            Log.d("StoryControl", "Init Javascript Page")
+            Log.d("StoryControl", doctext)
+        }
+    }
+
     private fun populateNextPage() {
         val storyv = findViewById(R.id.StoryText) as WebView
         try {
             val storytext = story.getStoryText(pageno)
-            storyv.loadData(storytext, "text/html", "utf-8")
+            WebView.setWebContentsDebuggingEnabled(true)
+            if (story.answerOrderMatters(pageno) == true) {
+                storyv.settings.javaScriptEnabled = true
+                storyv.settings.domStorageEnabled = true
+                storyv.setWebChromeClient(WebChromeClient());
+                storyv.setWebViewClient(WebViewClient());
+                storyv.settings.allowUniversalAccessFromFileURLs = true
+                storyv.settings.allowFileAccessFromFileURLs = true
+                storyv.settings.allowFileAccess = true
+                storyv.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                storyv.addJavascriptInterface(JavascriptInterface(), "storycontrol")
+            }
+            storyv.loadDataWithBaseURL("http://localhost", storytext, "text/html","UTF-8", "")
         } catch (e: Exception) {
             //we hit the end of the story, display a finish page and leave
             //for now just end the activity
