@@ -19,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-
+import java.util.regex.Pattern
 
 
 private class AnswerFrameDragListener(parent: HistoricStoriesGameActivity) : View.OnDragListener {
@@ -88,10 +88,11 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
 
     private inner class JavascriptInterface
     {
+        val anslocs: MutableMap<String, MutableList<Int>> = mutableMapOf<String, MutableList<Int>>()
+
         @android.webkit.JavascriptInterface
-        fun InitAnswers(doctext: String){
-            Log.d("StoryControl", "Init Javascript Page")
-            Log.d("StoryControl", doctext)
+        fun registerAnswer(name: String) {
+            println("Registering answer spacescp ")
         }
     }
 

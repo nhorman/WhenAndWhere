@@ -141,7 +141,7 @@ class GameCard(val carddata : Card, val location: Location) : Parcelable, Compar
         dest?.writeLong(cardData.level as Long)
         dest?.writeString(cardData.category)
         dest?.writeString(cardData.cardname)
-        dest?.writeInt(cardData.storyonly as Int)
+        dest?.writeInt(cardData as Int)
         dest?.writeInt((carddata.cardLogo as ByteArray).size)
         dest?.writeByteArray(carddata.cardLogo)
         dest?.writeLong(carddata.year as Long)

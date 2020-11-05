@@ -1,5 +1,10 @@
 
 function initPage() {
-    var theText = document.body.innerText;
-    storycontrol.InitAnswers(theText);
+    var answers = document.getElementsByClassName("ANSWER");
+    console.log(answers);
+    for (const a of answers) {
+        console.log(a);
+        storycontrol.registerAnswer(a.value);
+    }
+
 }
