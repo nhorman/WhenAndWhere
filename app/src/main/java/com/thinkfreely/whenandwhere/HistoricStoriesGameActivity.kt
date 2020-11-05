@@ -186,6 +186,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
             answerarea.addView(nextbutton)
         } else {
             pageanswercount = answers.count()
+            answercount = 0
             for (a in answers) {
                 val answerframe = FrameLayout(this)
                 answerframe.background = applicationContext.getDrawable(R.drawable.frame)
