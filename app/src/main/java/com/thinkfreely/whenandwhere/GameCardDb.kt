@@ -135,19 +135,24 @@ class GameCardFactory(val context: Context) {
 
     fun getStoryCards(pages: List<StoryPage>): List<GameCard> {
         val mycards: MutableList<GameCard> = mutableListOf()
-
+        var allcardnames: List<String> = emptyList<String>()
         for (p in pages) {
             val cardsnames = p.correctcardname
             if (cardsnames.isBlank() == true)
                 continue
             val cardlist = cardsnames.split(":")
-            for (c in cardlist) {
-                val newcarddata = this.getSpecificCard(c)
-                val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + newcarddata.location + "'")
-                val ldata = db.cardDao().getCardLocation(lquery)
-                mycards.add(GameCard(newcarddata, ldata))
-            }
+            allcardnames = allcardnames + cardlist
         }
+        //remove duplicates
+        allcardnames = allcardnames.distinct()
+
+        for (c in allcardnames) {
+            val newcarddata = this.getSpecificCard(c)
+            val lquery = SimpleSQLiteQuery("SELECT * FROM locations WHERE location = '" + newcarddata.location + "'")
+            val ldata = db.cardDao().getCardLocation(lquery)
+            mycards.add(GameCard(newcarddata, ldata))
+        }
+
         return mycards as List<GameCard>
     }
 

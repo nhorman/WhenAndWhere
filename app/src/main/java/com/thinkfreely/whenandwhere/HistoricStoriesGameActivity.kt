@@ -157,6 +157,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
 
     private fun populateCardSet() {
         val gamecardlayout = findViewById(R.id.GameCardLayout) as LinearLayout
+        gamecardlayout.removeAllViews()
         val cards = story.getGameCards()
         for (c in cards) {
             val cardimage = c.getCardView(this)
@@ -170,6 +171,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
         pageno++
         populateNextPage()
         populateAnswerArea()
+        populateCardSet()
     }
 
     private fun populateAnswerArea()  {
