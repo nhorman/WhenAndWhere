@@ -34,7 +34,7 @@ private class AnswerFrameDragListener(parent: HistoricStoriesGameActivity) : Vie
                     return true
                 }
                 DragEvent.ACTION_DRAG_ENTERED -> {
-                    println("ENTERED")
+                    //println("ENTERED")
                     return true
                 }
                 DragEvent.ACTION_DROP -> {
@@ -48,6 +48,8 @@ private class AnswerFrameDragListener(parent: HistoricStoriesGameActivity) : Vie
                     currentposition.removeView(card.cardview)
                     currentFrame.addView(card.cardview)
                     currentFrame.setTag(R.id.answer, card)
+                    val storyv = game.findViewById(R.id.StoryText) as WebView
+                    storyv.evaluateJavascript("updateAnswers()", null)
                     if (game.answercount == game.pageanswercount) {
                         //show the answertext, wait a bit, then prompt for the next page
                         game.showPageAnswers()
@@ -64,7 +66,7 @@ private class AnswerFrameDragListener(parent: HistoricStoriesGameActivity) : Vie
                     return true
                 }
                 DragEvent.ACTION_DRAG_EXITED -> {
-                    println("EXITED")
+                    //println("EXITED")
                 }
                 else -> {
                     println("UNKNOWN ACTION: " +event?.action.toString())
@@ -85,14 +87,47 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
     var pageno = 0
     var answercount = 0
     var pageanswercount = 0
+    private val webviewcontroller = JavascriptInterface()
 
-    private inner class JavascriptInterface
-    {
-        val anslocs: MutableMap<String, MutableList<Int>> = mutableMapOf<String, MutableList<Int>>()
+    private inner class JavascriptInterface {
+        val anslocs: MutableMap<String, MutableList<String>> =
+            mutableMapOf<String, MutableList<String>>()
+        val ansnums: MutableMap<String, Int> = mutableMapOf<String, Int>()
 
         @android.webkit.JavascriptInterface
-        fun registerAnswer(name: String) {
-            println("Registering answer spacescp ")
+        fun registerAnswer(name: String): String {
+            if (anslocs.containsKey(name) == false)
+                anslocs.set(name, mutableListOf<String>())
+            if (ansnums.containsKey(name) == false) {
+                val regex = Regex("[^0-9]")
+                val nameid = regex.replace(name, "").toInt()
+                ansnums.set(name, nameid)
+            }
+            val id = name + "_" + anslocs[name]?.count()
+            anslocs[name]?.add(id)
+            return id
+        }
+
+        @android.webkit.JavascriptInterface
+        fun getTrueAnswerSize(name: String): Int {
+            val answernum = ansnums[name] as Int
+            val answerlist = story.getAnswers(pageno)
+            return answerlist[answernum-1].length
+        }
+
+        @android.webkit.JavascriptInterface
+        fun updateAnswerField(id: String): String {
+            val answerarea = findViewById(R.id.AnswerCardLayout) as LinearLayout
+            val answerfields = id.split("_")
+            val answerpos = answerfields[0]
+            val myid = ansnums.get(answerpos) as Int
+            val child = answerarea.getChildAt(myid - 1)
+            try {
+                val card = child.getTag(R.id.answer) as GameCard
+                return (card.cardData.cardText as String)
+            } catch (e: Exception) {
+                return ""
+            }
         }
     }
 
@@ -110,7 +145,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
                 storyv.settings.allowFileAccessFromFileURLs = true
                 storyv.settings.allowFileAccess = true
                 storyv.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-                storyv.addJavascriptInterface(JavascriptInterface(), "storycontrol")
+                storyv.addJavascriptInterface(webviewcontroller, "storycontrol")
             }
             storyv.loadDataWithBaseURL("http://localhost", storytext, "text/html","UTF-8", "")
         } catch (e: Exception) {
