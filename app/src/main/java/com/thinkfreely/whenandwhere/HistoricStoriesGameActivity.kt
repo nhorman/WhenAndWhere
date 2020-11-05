@@ -219,6 +219,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
             val card = f.getTag(R.id.answer) as GameCard
             if (story.answerOrderMatters(pageno) == true) {
                 if (card.cardData.cardname.equals(answers[idx])) {
+                    idx = idx + 1
                     continue
                 } else {
                     gotitright = false
