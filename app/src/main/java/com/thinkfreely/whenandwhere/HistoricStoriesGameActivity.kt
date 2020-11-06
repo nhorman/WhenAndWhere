@@ -46,6 +46,7 @@ private class AnswerFrameDragListener(parent: HistoricStoriesGameActivity) : Vie
                         game.answercount++
                     }
                     currentposition.removeView(card.cardview)
+                    currentposition.setTag(R.id.answer, null)
                     currentFrame.addView(card.cardview)
                     currentFrame.setTag(R.id.answer, card)
                     val storyv = game.findViewById(R.id.StoryText) as WebView
@@ -87,7 +88,6 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
     var pageno = 0
     var answercount = 0
     var pageanswercount = 0
-    private val webviewcontroller = JavascriptInterface()
 
     private inner class JavascriptInterface {
         val anslocs: MutableMap<String, MutableList<String>> =
@@ -145,7 +145,8 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
                 storyv.settings.allowFileAccessFromFileURLs = true
                 storyv.settings.allowFileAccess = true
                 storyv.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-                storyv.addJavascriptInterface(webviewcontroller, "storycontrol")
+                storyv.removeJavascriptInterface("storycontrol")
+                storyv.addJavascriptInterface(JavascriptInterface(), "storycontrol")
             }
             storyv.loadDataWithBaseURL("http://localhost", storytext, "text/html","UTF-8", "")
         } catch (e: Exception) {
