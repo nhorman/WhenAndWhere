@@ -28,7 +28,7 @@ class HistoricStoriesSelector : AppCompatActivity() {
 
         setContentView(R.layout.activity_historic_stories_selector)
         supportActionBar?.hide()
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        //window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         val storylist = findViewById(R.id.StoriesList) as LinearLayout
         val factory = GameCardFactory(this)
         val job = Job()
