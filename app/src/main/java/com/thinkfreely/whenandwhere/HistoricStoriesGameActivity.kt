@@ -135,7 +135,7 @@ class HistoricStoriesGameActivity : AppCompatActivity() {
         val storyv = findViewById(R.id.StoryText) as WebView
         try {
             val storytext = story.getStoryText(pageno)
-            WebView.setWebContentsDebuggingEnabled(true)
+            //WebView.setWebContentsDebuggingEnabled(true)
             if (story.answerOrderMatters(pageno) == true) {
                 storyv.settings.javaScriptEnabled = true
                 storyv.settings.domStorageEnabled = true
