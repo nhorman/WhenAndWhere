@@ -102,12 +102,12 @@ class GameCardFactory(val context: Context) {
         path.delete()
     }
     init {
-
         if (gamedb == null) {
             try {
                 gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
                     .createFromAsset("database/cards.db").build()
             } catch (e: Exception) {
+                context.deleteDatabase("mycards.db")
                 println("Database Corrupted, rebuilding")
                 gamedb = Room.databaseBuilder(context, GameCardDb::class.java, "mycards.db")
                     .createFromAsset("database/cards.db").build()
