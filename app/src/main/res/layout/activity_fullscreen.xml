@@ -78,12 +78,12 @@
 
             <ImageButton
                 android:id="@+id/settingsButton"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
+                android:layout_width="89dp"
+                android:layout_height="87dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="312dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="259dp"
                 android:background="#02FFFFFF"
                 app:srcCompat="@drawable/settings" />
 
